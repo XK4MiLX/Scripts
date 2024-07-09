@@ -86,6 +86,7 @@ function _cmd {
     done < debug.log
     printf "\n"
     rm debug.log
+    set -o history
     exit 1
 } 
 
