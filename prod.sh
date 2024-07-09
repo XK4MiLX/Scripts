@@ -177,6 +177,11 @@ fix_frankenstein() {
 check_command "lsb_release" "lsb-release"
 check_command "wg-quick" "wireguard wireguard-tools udhcpc"
 
+if ! command -v whiptail &> /dev/null; then
+  sudo apt-get update -y 
+  sudo apt-get install -y whiptail
+fi
+
 UBUNTU_VERSION=$(lsb_release -rs)
 echo "Detected Ubuntu version: $UBUNTU_VERSION"
 clear_screen
