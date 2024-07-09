@@ -74,21 +74,25 @@ service_exists() {
 }
 
 get_local_ip() {
-  ip_list=($(ip addr show | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1 | uniq))
-  elements=${#ip_list[@]}
-  choices=();
-  for (( i=0;i<$elements;i++)); do
-    if [[ "$i"  == "0" ]]; then
-      choices+=("${ip_list[i]}" "" "ON");
-    else
-      choices+=("${ip_list[i]}" "" "OFF");
-    fi
-  done;
-  IP=$(whiptail --title "Which IP to bind for pouwfrontend web server?"         \
-           --radiolist " \n Use the UP/DOWN arrows to highlight the IP you want. Press Spacebar on the IP you want to select, THEN press ENTER." 25 55 10 \
-           "${choices[@]}" \  3>&2 2>&1 1>&3 );
+# Retrieve the list of IP addresses
+ip_list=($(ip addr show | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1 | uniq))
+elements=${#ip_list[@]}
+# Prepare the choices array for whiptail
+choices=()
+for (( i=0; i<$elements; i++ )); do
+  if [[ "$i" == "0" ]]; then
+    choices+=("${ip_list[i]}" "" "ON")
+  else
+    choices+=("${ip_list[i]}" "" "OFF")
+  fi
+done
+# Display the whiptail dialog
+IP=$(whiptail --title "Which IP to bind for pouwfrontend web server?" \
+           --radiolist " \nUse the UP/DOWN arrows to highlight the IP you want. Press Spacebar on the IP you want to select, THEN press ENTER." 25 55 15 \
+           "${choices[@]}" 3>&2 2>&1 1>&3)
+# Display the selected IP address (for debugging purposes)
+echo "Selected IP: $IP"
 }
-
 
 daemon_setup() {
   clear_screen
