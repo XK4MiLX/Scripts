@@ -170,7 +170,7 @@ IP=$(whiptail --title "Which IP to bind for pouwfrontend web server?" \
 
 daemon_setup() {
   clear_screen
-  echo "Fluxcore for Linux AMD64 - ${GREEN}Production${RESTORE}"
+  echo -e "Fluxcore for Linux AMD64 - ${GREEN}Production${RESTORE}"
   echo "Please allow privileges to access hardware info to the program."
   sudo_check_v1
   if ! id "fluxuser" &>/dev/null; then
