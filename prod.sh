@@ -119,6 +119,7 @@ else
         exit 1
     fi
 fi
+echo -e ""
 }
 
 clear_screen() {
