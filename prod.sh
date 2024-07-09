@@ -1,4 +1,25 @@
 #!/bin/bash
+set +o history
+
+# color codes
+RESTORE='\033[0m'
+BLACK='\033[00;30m'
+RED='\033[00;31m'
+GREEN='\033[00;32m'
+YELLOW='\033[00;33m'
+BLUE='\033[00;34m'
+PURPLE='\033[00;35m'
+CYAN='\033[00;36m'
+LIGHTGRAY='\033[00;37m'
+LBLACK='\033[01;30m'
+LRED='\033[01;31m'
+LGREEN='\033[01;32m'
+LYELLOW='\033[01;33m'
+LBLUE='\033[01;34m'
+LPURPLE='\033[01;35m'
+LCYAN='\033[01;36m'
+WHITE='\033[01;37m'
+OVERWRITE='\e[1A\e[K'
 
 Banner='[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m
 [38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m
@@ -44,6 +65,29 @@ Banner='[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[
 export NEWT_COLORS='
 title=black,
 '
+
+function _task {
+    if [[ $TASK != "" ]]; then
+        printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}${TASK}\n"
+    fi
+    TASK=$1
+    printf "${LBLACK} [ ]  ${TASK} \n${LRED}"
+}
+
+# _cmd performs commands with error checking
+function _cmd {
+    > debug.log
+    if eval "$1" 1> /dev/null 2> debug.log; then
+        return 0 # success
+    fi
+    printf "${OVERWRITE}${LRED} [X]  ${TASK}${LRED}\n"
+    while read line; do 
+        printf "      ${line}\n"
+    done < debug.log
+    printf "\n"
+    rm debug.log
+    exit 1
+} 
 
 name="fluxcore-linux-amd64"
 
@@ -101,7 +145,6 @@ daemon_setup() {
   
   sudo -nv 2>/dev/null
   sudo_status=$?
-
   if [ $sudo_status -eq 1 ]; then
     echo "Sudo requires a password. Please enter your password."
     if ! sudo -v; then
@@ -116,23 +159,22 @@ daemon_setup() {
   sudo useradd -p "" -r -s /bin/bash -m fluxuser
   echo "fluxuser ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/dont-prompt-fluxuser-for-sudo-password"
   #Check if the fluxcore service exists
-  echo "Check if the fluxcore service exists..."
+  _task "Installing fluxcore"
   if service_exists "fluxcore"; then
-    sudo systemctl stop fluxcore.service
-    sudo systemctl disable fluxcore.service
+    _cmd "sudo systemctl stop fluxcore.service"
+    _cmd "sudo systemctl disable fluxcore.service"
   fi
-  sudo curl -o /home/fluxuser/$name https://download.fluxcore.ai/$name
-  sudo chown fluxuser:fluxuser /home/fluxuser/$name && sudo chmod +x /home/fluxuser/$name
-  sudo setcap 'CAP_DAC_READ_SEARCH+eip cap_net_bind_service=+ep' /home/fluxuser/$name
-  sudo chmod u+s,+x /home/fluxuser/$name
-  echo "Installing fluxcore service"
+  _cmd "sudo curl -o /home/fluxuser/$name https://download.fluxcore.ai/$name"
+  _cmd "sudo chown fluxuser:fluxuser /home/fluxuser/$name && sudo chmod +x /home/fluxuser/$name"
+  _cmd "sudo setcap 'CAP_DAC_READ_SEARCH+eip cap_net_bind_service=+ep' /home/fluxuser/$name"
+  _cmd "sudo chmod u+s,+x /home/fluxuser/$name"
   get_local_ip
   IP=${IP:-127.0.0.1}
-  sudo curl -o /lib/systemd/system/fluxcore.service https://download.fluxcore.ai/fluxcore.service
-  sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service
-  sudo systemctl daemon-reload
-  sudo systemctl enable fluxcore.service
-  sudo systemctl start fluxcore.service
+  _cmd "sudo curl -o /lib/systemd/system/fluxcore.service https://download.fluxcore.ai/fluxcore.service"
+  _cmd "sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service"
+  _cmd "sudo systemctl daemon-reload"
+  _cmd "sudo systemctl enable fluxcore.service"
+  _cmd "sudo systemctl start fluxcore.service"
   systemctl status --no-pager fluxcore.service
   echo
   echo "You can access it here: http://$IP:18180"
@@ -140,14 +182,13 @@ daemon_setup() {
   echo "You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', 'machine3.remote.fluxcore'."
 }
 
-unistall() {
+uninstall() {
  clear_screen
  UBUNTU_VERSION=$(lsb_release -rs)
  echo "Detected Ubuntu version: $UBUNTU_VERSION"
  echo "Please allow privileges to remove program"
  sudo -nv 2>/dev/null
  sudo_status=$?
-
  if [ $sudo_status -eq 1 ]; then
    echo "Sudo requires a password. Please enter your password."
    if ! sudo -v; then
@@ -158,32 +199,40 @@ unistall() {
    echo "You do not have sudo privileges. Exiting script."
    exit 1
  fi
- sudo systemctl stop fluxcore.service
- sudo systemctl disable fluxcore.service
- sudo rm /home/fluxuser/$name
- sudo rm /lib/systemd/system/fluxcore.service
- sudo systemctl daemon-reload
- sudo deluser --remove-home fluxuser
- sudo /usr/local/bin/rke2-uninstall.sh || true
- sudo rm -rf /etc/ceph \
-	/etc/cni \
-	/etc/kubernetes \
-	/etc/rancher \
-	/opt/cni \
-	/opt/rke \
-	/run/secret/kubernetes.io \
-	/run/calico \
-	/run/flannel \
-	/var/lib/calico \
-	/var/lib/etcd \
-	/var/lib/cni \
-	/var/lib/kubelet \
-	/var/lib/rancher\
-	/var/log/containers \
-	/var/log/kube-audit \
-	/var/log/pods \
-	/var/run/calico
- echo "Uninstall $name daemon"
+    echo "Stopping fluxcore service..."
+    sudo systemctl stop fluxcore.service >/dev/null 2>&1
+    echo "Disabling fluxcore service..."
+    sudo systemctl disable fluxcore.service >/dev/null 2>&1
+    echo "Removing /home/fluxuser/$name..."
+    sudo rm /home/fluxuser/$name >/dev/null 2>&1
+    echo "Removing /lib/systemd/system/fluxcore.service..."
+    sudo rm /lib/systemd/system/fluxcore.service >/dev/null 2>&1
+    echo "Reloading systemctl daemon..."
+    sudo systemctl daemon-reload
+    echo "Removing user fluxuser..."
+    sudo deluser --remove-home fluxuser
+    echo "Running rke2-uninstall.sh script..."
+    sudo /usr/local/bin/rke2-uninstall.sh || true
+    echo "Removing Kubernetes and related files..."
+    sudo rm -rf /etc/ceph \
+        /etc/cni \
+        /etc/kubernetes \
+        /etc/rancher \
+        /opt/cni \
+        /opt/rke \
+        /run/secret/kubernetes.io \
+        /run/calico \
+        /run/flannel \
+        /var/lib/calico \
+        /var/lib/etcd \
+        /var/lib/cni \
+        /var/lib/kubelet \
+        /var/lib/rancher \
+        /var/log/containers \
+        /var/log/kube-audit \
+        /var/log/pods \
+        /var/run/calico >/dev/null 2>&1
+    echo "Uninstallation of $name daemon complete."
 }
 
 fix_frankenstein() {
@@ -206,13 +255,13 @@ clear_screen
 echo -e "$Banner"
 echo -e "=================================================================================================================[PRODUCTION]"
 echo -e "1) Install FluxCore"
-echo -e "2) Unistall FluxCore"
+echo -e "2) Uninstall FluxCore"
 echo -e "3) Fix Frankenstein Script"
 echo -e "============================================================================================================================="
 read -rp "Pick an option and hit ENTER: "
 case "$REPLY" in
  1)  
-		clear
+ 		clear
 		sleep 1
 		daemon_setup
 
@@ -220,7 +269,7 @@ case "$REPLY" in
  2) 
 		clear
 		sleep 1
-		unistall
+		uninstall
  ;;
  3)     
 		clear
@@ -228,3 +277,4 @@ case "$REPLY" in
 		fix_frankenstein
  ;;
  esac
+ set -o history
