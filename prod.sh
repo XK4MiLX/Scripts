@@ -92,6 +92,21 @@ function _cmd {
 
 name="fluxcore-linux-amd64"
 
+sudo_check() {
+ sudo -nv 2>/dev/null
+ sudo_status=$?
+ if [ $sudo_status -eq 1 ]; then
+   echo "Sudo requires a password. Please enter your password."
+   if ! sudo -v; then
+     echo "Incorrect sudo password. Exiting script."
+     exit 1
+   fi
+ elif [ $sudo_status -ne 0 ]; then
+   echo "You do not have sudo privileges. Exiting script."
+   exit 1
+ fi
+}
+
 clear_screen() {
   clear
 }
@@ -143,18 +158,7 @@ daemon_setup() {
   clear_screen
   echo "Fluxcore for Linux AMD64 [PRODUCTION]"
   echo "Please allow privileges to access hardware info to the program."
-  sudo -nv 2>/dev/null
-  sudo_status=$?
-  if [ $sudo_status -eq 1 ]; then
-    echo "Sudo requires a password. Please enter your password."
-    if ! sudo -v; then
-      echo "Incorrect sudo password. Exiting script."
-      exit 1
-    fi
-  elif [ $sudo_status -ne 0 ]; then
-    echo "You do not have sudo privileges. Exiting script."
-    exit 1
-  fi
+  #sudo_check
   if ! id "fluxuser" &>/dev/null; then
     _task "Create user fluxuser"
     _cmd "sudo useradd -p '' -r -s /bin/bash -m fluxuser"
@@ -195,18 +199,7 @@ uninstall() {
  UBUNTU_VERSION=$(lsb_release -rs)
  echo "Detected Ubuntu version: $UBUNTU_VERSION"
  echo "Please allow privileges to remove program"
- sudo -nv 2>/dev/null
- sudo_status=$?
- if [ $sudo_status -eq 1 ]; then
-   echo "Sudo requires a password. Please enter your password."
-   if ! sudo -v; then
-     echo "Incorrect sudo password. Exiting script."
-     exit 1
-   fi
- elif [ $sudo_status -ne 0 ]; then
-   echo "You do not have sudo privileges. Exiting script."
-   exit 1
- fi
+ #sudo_check
  if service_exists "fluxcore"; then
   _task "Removing fluxcore service" 
   _cmd "sudo systemctl stop fluxcore.service"
