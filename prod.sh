@@ -212,8 +212,6 @@ daemon_setup() {
 
 uninstall() {
  clear_screen
- UBUNTU_VERSION=$(lsb_release -rs)
- echo "Detected Ubuntu version: ${CYAN}$UBUNTU_VERSION${RESTORE}"
  echo "Please allow privileges to remove program"
  sudo_check_v1
  if service_exists "fluxcore"; then
@@ -277,7 +275,7 @@ clear_screen
 echo -e "$Banner"
 UBUNTU_VERSION=$(lsb_release -rs)
 echo -e "Branch: ${CYAN}PRODUCTION${RESTORE}"
-echo -e "Detected Ubuntu version: ${CYAN}$UBUNTU_VERSION${RESTORE}"
+echo -e "Ubuntu version: ${CYAN}${UBUNTU_VERSION}${RESTORE}"
 echo -e "============================================================================================================================="
 echo -e "1) Install FluxCore"
 echo -e "2) Uninstall FluxCore"
