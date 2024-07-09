@@ -165,8 +165,6 @@ done
 IP=$(whiptail --title "Which IP to bind for pouwfrontend web server?" \
            --radiolist " \nUse the UP/DOWN arrows to highlight the IP you want. Press Spacebar on the IP you want to select, THEN press ENTER." 25 55 15 \
            "${choices[@]}" 3>&2 2>&1 1>&3)
-# Display the selected IP address (for debugging purposes)
-echo "Selected IP: $IP"
 }
 
 daemon_setup() {
@@ -212,7 +210,7 @@ daemon_setup() {
 uninstall() {
  clear_screen
  UBUNTU_VERSION=$(lsb_release -rs)
- echo "Detected Ubuntu version: $UBUNTU_VERSION"
+ echo "Detected Ubuntu version: ${CYAN}$UBUNTU_VERSION${NC}"
  echo "Please allow privileges to remove program"
  sudo_check_v1
  if service_exists "fluxcore"; then
