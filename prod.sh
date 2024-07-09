@@ -177,8 +177,7 @@ daemon_setup() {
   if ! id "fluxuser" &>/dev/null; then
     _task "Create user fluxuser"
     _cmd "sudo useradd -p '' -r -s /bin/bash -m fluxuser"
-    echo "fluxuser ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/dont-prompt-fluxuser-for-sudo-password"
-    printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}${TASK}\n ${RESTORE}"
+    _cmd "fluxuser ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/dont-prompt-fluxuser-for-sudo-password"
   fi
   echo -e "${YELLOW}==============================================================================================================${RESTORE}"
   _task "Download the Fluxcore executable"
