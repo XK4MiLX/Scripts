@@ -107,6 +107,20 @@ sudo_check() {
  fi
 }
 
+sudo_check_v1() {
+echo "Checking if sudo requires a password..."
+if sudo -n true 2>/dev/null; then
+    echo "Sudo does not require a password."
+else
+    echo "Sudo requires a password. Please enter your password:"
+    sudo -v
+    if [ $? -ne 0 ]; then
+        echo "Incorrect password or sudo authentication failed."
+        exit 1
+    fi
+fi
+}
+
 clear_screen() {
   clear
 }
@@ -158,7 +172,7 @@ daemon_setup() {
   clear_screen
   echo "Fluxcore for Linux AMD64 [PRODUCTION]"
   echo "Please allow privileges to access hardware info to the program."
-  #sudo_check
+  sudo_check_v1
   if ! id "fluxuser" &>/dev/null; then
     _task "Create user fluxuser"
     _cmd "sudo useradd -p '' -r -s /bin/bash -m fluxuser"
@@ -199,7 +213,7 @@ uninstall() {
  UBUNTU_VERSION=$(lsb_release -rs)
  echo "Detected Ubuntu version: $UBUNTU_VERSION"
  echo "Please allow privileges to remove program"
- #sudo_check
+ sudo_check_v1
  if service_exists "fluxcore"; then
   _task "Removing fluxcore service" 
   _cmd "sudo systemctl stop fluxcore.service"
