@@ -111,7 +111,8 @@ daemon_setup() {
   
   sudo useradd -p "" -r -s /bin/bash -m fluxuser
   echo "fluxuser ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/dont-prompt-fluxuser-for-sudo-password"
-   # Check if the fluxcore service exists
+  #Check if the fluxcore service exists
+  echo "Check if the fluxcore service exists..."
   if service_exists "fluxcore"; then
     sudo systemctl stop fluxcore.service
     sudo systemctl disable fluxcore.service
