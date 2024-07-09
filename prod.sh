@@ -202,7 +202,7 @@ daemon_setup() {
   echo -e ""
   systemctl status --no-pager fluxcore.service
   echo
-  echo -e "${PIN} ${CYAN}You can access it here:  ${SEA}http://$IP:18180${RESTORE}"
+  echo -e "${PIN} ${CYAN}You can access it here:  ${GREEN}http://$IP:18180${RESTORE}"
   echo -e "${PIN} ${CYAN}Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name.${RESTORE}"
   echo -e "${PIN} ${CYAN}You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', ... ${RESTORE}"
   echo
