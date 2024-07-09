@@ -64,6 +64,15 @@ check_command() {
   fi
 }
 
+service_exists() {
+  service_name=$1
+  if systemctl list-units --full -all | grep -Fq "$service_name.service"; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 get_local_ip() {
   ip_list=($(ip addr show | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1 | uniq))
   elements=${#ip_list[@]}
@@ -102,8 +111,11 @@ daemon_setup() {
   
   sudo useradd -p "" -r -s /bin/bash -m fluxuser
   echo "fluxuser ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/dont-prompt-fluxuser-for-sudo-password"
-  sudo systemctl stop fluxcore.service
-  sudo systemctl disable fluxcore.service
+   # Check if the fluxcore service exists
+  if service_exists "fluxcore"; then
+    sudo systemctl stop fluxcore.service
+    sudo systemctl disable fluxcore.service
+  fi
   sudo curl -o /home/fluxuser/$name https://download.fluxcore.ai/$name
   sudo chown fluxuser:fluxuser /home/fluxuser/$name && sudo chmod +x /home/fluxuser/$name
   sudo setcap 'CAP_DAC_READ_SEARCH+eip cap_net_bind_service=+ep' /home/fluxuser/$name
