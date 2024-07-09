@@ -206,7 +206,7 @@ case "$REPLY" in
  2) 
 		clear
 		sleep 1
-		install_node
+		unistall
  ;;
  3)     
 		clear
