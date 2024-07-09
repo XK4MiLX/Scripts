@@ -96,7 +96,7 @@ echo "Selected IP: $IP"
 
 daemon_setup() {
   clear_screen
-  echo "Fluxcore for Linux AMD64"
+  echo "Fluxcore for Linux AMD64 [PRODUCTION]"
   echo "Please allow privileges to access hardware info to the program."
   
   sudo -nv 2>/dev/null
