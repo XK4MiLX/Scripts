@@ -255,7 +255,7 @@ uninstall() {
  /var/log/pods \
  /var/run/calico >/dev/null 2>&1
  printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}${TASK}\n ${RESTORE}"
- echo "Uninstallation of FluxCore complete."
+ echo -e ""
 }
 
 fix_frankenstein() {
