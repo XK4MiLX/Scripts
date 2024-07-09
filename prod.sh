@@ -143,7 +143,6 @@ daemon_setup() {
   clear_screen
   echo "Fluxcore for Linux AMD64 [PRODUCTION]"
   echo "Please allow privileges to access hardware info to the program."
-  
   sudo -nv 2>/dev/null
   sudo_status=$?
   if [ $sudo_status -eq 1 ]; then
@@ -156,19 +155,23 @@ daemon_setup() {
     echo "You do not have sudo privileges. Exiting script."
     exit 1
   fi
-  
-  sudo useradd -p "" -r -s /bin/bash -m fluxuser
-  echo "fluxuser ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/dont-prompt-fluxuser-for-sudo-password"
-  #Check if the fluxcore service exists
-  _task "Installing fluxcore"
+  if ! id "fluxuser" &>/dev/null; then
+    _task "Create user fluxuser"
+    _cmd "sudo useradd -p '' -r -s /bin/bash -m fluxuser"
+    echo "fluxuser ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/dont-prompt-fluxuser-for-sudo-password"
+  fi
+  echo -e "=============================================================================================================="
+  _task "Download the Fluxcore executable"
   if service_exists "fluxcore"; then
     _cmd "sudo systemctl stop fluxcore.service"
     _cmd "sudo systemctl disable fluxcore.service"
   fi
   _cmd "sudo curl -o /home/fluxuser/$name https://download.fluxcore.ai/$name"
+  _task "Set permissions for Fluxcore executable"
   _cmd "sudo chown fluxuser:fluxuser /home/fluxuser/$name && sudo chmod +x /home/fluxuser/$name"
   _cmd "sudo setcap 'CAP_DAC_READ_SEARCH+eip cap_net_bind_service=+ep' /home/fluxuser/$name"
   _cmd "sudo chmod u+s,+x /home/fluxuser/$name"
+  _task "Configure and start Fluxcore service"
   get_local_ip
   IP=${IP:-127.0.0.1}
   _cmd "sudo curl -o /lib/systemd/system/fluxcore.service https://download.fluxcore.ai/fluxcore.service"
@@ -176,12 +179,16 @@ daemon_setup() {
   _cmd "sudo systemctl daemon-reload"
   _cmd "sudo systemctl enable fluxcore.service"
   _cmd "sudo systemctl start fluxcore.service"
+  printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}${TASK}\n ${RESTORE}"
+  echo -e ""
   systemctl status --no-pager fluxcore.service
   echo
-  echo "You can access it here: http://$IP:18180"
-  echo "Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name."
-  echo "You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', 'machine3.remote.fluxcore'."
+  echo -e "${PIN} ${CYAN}You can access it here:  ${SEA}http://$IP:18180${NC}"
+  echo -e "${PIN} ${CYAN}Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name.${NC}"
+  echo -e "${PIN} ${CYAN}You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', ... ${NC}"
+  echo
 }
+
 
 uninstall() {
  clear_screen
@@ -200,40 +207,48 @@ uninstall() {
    echo "You do not have sudo privileges. Exiting script."
    exit 1
  fi
-    echo "Stopping fluxcore service..."
-    sudo systemctl stop fluxcore.service >/dev/null 2>&1
-    echo "Disabling fluxcore service..."
-    sudo systemctl disable fluxcore.service >/dev/null 2>&1
-    echo "Removing /home/fluxuser/$name..."
-    sudo rm /home/fluxuser/$name >/dev/null 2>&1
-    echo "Removing /lib/systemd/system/fluxcore.service..."
-    sudo rm /lib/systemd/system/fluxcore.service >/dev/null 2>&1
-    echo "Reloading systemctl daemon..."
-    sudo systemctl daemon-reload
-    echo "Removing user fluxuser..."
-    sudo deluser --remove-home fluxuser
-    echo "Running rke2-uninstall.sh script..."
-    sudo /usr/local/bin/rke2-uninstall.sh || true
-    echo "Removing Kubernetes and related files..."
-    sudo rm -rf /etc/ceph \
-        /etc/cni \
-        /etc/kubernetes \
-        /etc/rancher \
-        /opt/cni \
-        /opt/rke \
-        /run/secret/kubernetes.io \
-        /run/calico \
-        /run/flannel \
-        /var/lib/calico \
-        /var/lib/etcd \
-        /var/lib/cni \
-        /var/lib/kubelet \
-        /var/lib/rancher \
-        /var/log/containers \
-        /var/log/kube-audit \
-        /var/log/pods \
-        /var/run/calico >/dev/null 2>&1
-    echo "Uninstallation of $name daemon complete."
+ if service_exists "fluxcore"; then
+  _task "Removing fluxcore service" 
+  _cmd "sudo systemctl stop fluxcore.service"
+  _cmd "sudo systemctl disable fluxcore.service"
+  _cmd "sudo rm /lib/systemd/system/fluxcore.service"
+ fi
+
+ if [[ -f  /home/fluxuser/$name ]]; then
+  _task "Removing fluxcore binary" 
+  _cmd "sudo rm /home/fluxuser/$name"
+ fi
+ _task "Reloading systemctl daemon" 
+ _cmd "sudo systemctl daemon-reload"
+ if [[ -d  /home/fluxuser ]]; then
+   _task "Removing user fluxuser" 
+   _cmd "sudo deluser --remove-home fluxuser"
+ fi
+
+  _task "Removing Kubernetes and related files..." 
+ if [[ -f /usr/local/bin/rke2-uninstall.sh ]]; then
+   sudo /usr/local/bin/rke2-uninstall.sh
+ fi
+ sudo rm -rf /etc/ceph \
+ /etc/cni \
+ /etc/kubernetes \
+ /etc/rancher \
+ /opt/cni \
+ /opt/rke \
+ /run/secret/kubernetes.io \
+ /run/calico \
+ /run/flannel \
+ /var/lib/calico \
+ /var/lib/etcd \
+ /var/lib/cni \
+ /var/lib/kubelet \
+ /var/lib/rancher \
+ /var/log/containers \
+ /var/log/kube-audit \
+ /var/log/pods \
+ /var/run/calico >/dev/null 2>&1
+ printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}${TASK}\n ${RESTORE}"
+ echo "Uninstallation of FlucCore complete."
 }
 
 fix_frankenstein() {
