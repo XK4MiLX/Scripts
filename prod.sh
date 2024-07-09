@@ -174,6 +174,7 @@ daemon_setup() {
   echo "Fluxcore for Linux AMD64 - ${GREEN}Production${RESTORE}"
   echo "Please allow privileges to access hardware info to the program."
   sudo_check_v1
+  echo -e "${YELLOW}==============================================================================================================${RESTORE}"
   if ! id "fluxuser" &>/dev/null; then
     _task "Create user fluxuser"
     _cmd "sudo useradd -p '' -r -s /bin/bash -m fluxuser"
@@ -181,7 +182,6 @@ daemon_setup() {
       _cmd "echo \"fluxuser ALL=(ALL:ALL) NOPASSWD: ALL\" | sudo tee \"/etc/sudoers.d/dont-prompt-fluxuser-for-sudo-password\" > /dev/null"
     fi
   fi
-  echo -e "${YELLOW}==============================================================================================================${RESTORE}"
   _task "Download the Fluxcore executable"
   if service_exists "fluxcore"; then
     _cmd "sudo systemctl stop fluxcore.service"
