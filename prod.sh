@@ -268,7 +268,7 @@ check_command "wg-quick" "wireguard wireguard-tools udhcpc"
 
 if ! command -v whiptail &> /dev/null; then
   sudo apt-get update -y 
-  sudo apt-get install -y whiptail
+  sudo apt-get install -y whiptail >/dev/null 2>&1
 fi
 
 UBUNTU_VERSION=$(lsb_release -rs)
