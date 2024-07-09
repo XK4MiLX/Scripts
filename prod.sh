@@ -173,7 +173,7 @@ daemon_setup() {
   echo "Fluxcore for Linux AMD64 - ${GREEN}Production${RESTORE}"
   echo "Please allow privileges to access hardware info to the program."
   sudo_check_v1
-  echo -e "${YELLOW}==============================================================================================================${RESTORE}"
+  echo -e ""
   if ! id "fluxuser" &>/dev/null; then
     _task "Create user fluxuser"
     _cmd "sudo useradd -p '' -r -s /bin/bash -m fluxuser"
