@@ -174,13 +174,6 @@ fix_frankenstein() {
   bash fix-frankenstein.sh
 }
 
-install_xorg() {
-  sudo apt-get install -y xorg
-  sudo sed -i "s/console/anybody/g" /etc/X11/Xwrapper.config
-  sudo DEBCONF_DB_OVERRIDE='File {/etc/X11/Xwrapper.config}' dpkg-reconfigure -fnoninteractive xserver-xorg-legacy
-}
-
-
 check_command "lsb_release" "lsb-release"
 check_command "wg-quick" "wireguard wireguard-tools udhcpc"
 
@@ -193,7 +186,6 @@ echo -e "=======================================================================
 echo -e "1) Install FluxCore"
 echo -e "2) Unistall FluxCore"
 echo -e "3) Fix Frankenstein Script"
-echo -e "4) Install X server and update config"
 echo -e "============================================================================================================================="
 read -rp "Pick an option and hit ENTER: "
 case "$REPLY" in
@@ -212,10 +204,5 @@ case "$REPLY" in
 		clear
 		sleep 1
 		fix_frankenstein
- ;;
- 4)  
-		clear
-		sleep 1
-		install_xorg
  ;;
  esac
