@@ -171,7 +171,7 @@ IP=$(whiptail --title "Which IP to bind for pouwfrontend web server?" \
 
 daemon_setup() {
   clear_screen
-  echo "Fluxcore for Linux AMD64 [PRODUCTION]"
+  echo "Fluxcore for Linux AMD64 - ${GREEN}Production${RESTORE}"
   echo "Please allow privileges to access hardware info to the program."
   sudo_check_v1
   if ! id "fluxuser" &>/dev/null; then
@@ -180,7 +180,7 @@ daemon_setup() {
     echo "fluxuser ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/dont-prompt-fluxuser-for-sudo-password"
     printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}${TASK}\n ${RESTORE}"
   fi
-  echo -e "=============================================================================================================="
+  echo -e "${YELLOW}==============================================================================================================${RESTORE}"
   _task "Download the Fluxcore executable"
   if service_exists "fluxcore"; then
     _cmd "sudo systemctl stop fluxcore.service"
@@ -274,13 +274,13 @@ clear_screen
 
 echo -e "$Banner"
 UBUNTU_VERSION=$(lsb_release -rs)
-echo -e "Branch: ${CYAN}PRODUCTION${RESTORE}"
+echo -e "Branch: ${GREEN}Production${RESTORE}"
 echo -e "Ubuntu version: ${CYAN}${UBUNTU_VERSION}${RESTORE}"
-echo -e "============================================================================================================================="
-echo -e "1) Install FluxCore"
-echo -e "2) Uninstall FluxCore"
-echo -e "3) Fix Frankenstein Script"
-echo -e "============================================================================================================================="
+echo -e "${YELLOW}=============================================================================================================================${RESTORE}"
+echo -e "${CYAN}1) Install FluxCore${RESTORE}"
+echo -e "${CYAN}2) Uninstall FluxCore${RESTORE}"
+echo -e "${CYAN}3) Fix Frankenstein Script${RESTORE}"
+echo -e "${YELLOW}=============================================================================================================================${RESTORE}"
 read -rp "Pick an option and hit ENTER: "
 case "$REPLY" in
  1)  
