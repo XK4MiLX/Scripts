@@ -153,7 +153,7 @@ daemon_setup() {
   clear_screen
   echo -e "Fluxcore for Linux AMD64 - ${GREEN}Production${RESTORE}"
   echo "Please allow privileges to access hardware info to the program."
-  sudo_check_v1
+  sudo_check
   if ! id "fluxuser" &>/dev/null; then
     _task "Create user fluxuser"
     _cmd "sudo useradd -p '' -r -s /bin/bash -m fluxuser"
@@ -193,7 +193,7 @@ daemon_setup() {
 uninstall() {
  clear_screen
  echo "Please allow privileges to remove program"
- sudo_check_v1
+ sudo_check
  if service_exists "fluxcore"; then
   _task "Removing fluxcore service" 
   _cmd "sudo systemctl stop fluxcore.service"
