@@ -254,15 +254,15 @@ clear_screen
 
 echo -e "$Banner"
 UBUNTU_VERSION=$(lsb_release -rs)
-echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
-echo -e "Branch: ${GREEN}Production${RESTORE}"
-echo -e "Ubuntu version: ${CYAN}${UBUNTU_VERSION}${RESTORE}"
-echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
-echo -e "${CYAN}1) Install FluxCore${RESTORE}"
-echo -e "${CYAN}2) Uninstall FluxCore${RESTORE}"
-echo -e "${CYAN}3) Fix Frankenstein Script${RESTORE}"
-echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
-read -rp "Pick an option and hit ENTER: "
+echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
+echo -e " Branch: ${GREEN}Production${RESTORE}"
+echo -e " Ubuntu version: ${CYAN}${UBUNTU_VERSION}${RESTORE}"
+echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
+echo -e "${CYAN} 1) Install FluxCore${RESTORE}"
+echo -e "${CYAN} 2) Uninstall FluxCore${RESTORE}"
+echo -e "${CYAN} 3) Fix Frankenstein Script${RESTORE}"
+echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
+read -rp " Pick an option and hit ENTER: "
 case "$REPLY" in
  1)  
  		clear
