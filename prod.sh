@@ -145,7 +145,7 @@ get_local_ip() {
   fi
  done
  IP=$(whiptail --title "Which IP to bind for pouwfrontend web server?" \
-           --radiolist " \nUse the UP/DOWN arrows to highlight the IP you want. Press Spacebar on the IP you want to select, THEN press ENTER." 25 55 15 \
+           --radiolist " \nAny IP other then 127.0.0.1 is a security risk and should be selected only by advanced users.\nUse the UP/DOWN arrows to highlight the IP you want. Press Spacebar on the IP you want to select, THEN press ENTER." 25 55 15 \
            "${choices[@]}" 3>&2 2>&1 1>&3)
 }
 
@@ -254,14 +254,14 @@ clear_screen
 
 echo -e "$Banner"
 UBUNTU_VERSION=$(lsb_release -rs)
-echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
+echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
 echo -e " Branch: ${GREEN}Production${RESTORE}"
 echo -e " Ubuntu version: ${CYAN}${UBUNTU_VERSION}${RESTORE}"
-echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
+echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
 echo -e "${CYAN} 1) Install FluxCore${RESTORE}"
 echo -e "${CYAN} 2) Uninstall FluxCore${RESTORE}"
 echo -e "${CYAN} 3) Fix Frankenstein Script${RESTORE}"
-echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
+echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
 read -rp " Pick an option and hit ENTER: "
 case "$REPLY" in
  1)  
