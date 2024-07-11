@@ -145,10 +145,11 @@ get_local_ip() {
   fi
  done
 IP=$(whiptail --title "Which IP to bind for pouwfrontend web server?" \
-           --radiolist "\
-Any IP other than 127.0.0.1 is a security risk and should be selected only by advanced users.\
-\nUse the UP/DOWN arrows to highlight the IP you want.\
-\nPress Spacebar on the IP you want to select, THEN press ENTER." 30 60 15 \
+           --radiolist "\n\
+Any IP other than 127.0.0.1 is a security risk and should be selected only by advanced users.\n\
+\n\
+Use the UP/DOWN arrows to highlight the IP you want.\n\
+Press Spacebar on the IP you want to select, THEN press ENTER." 35 60 20 \
            "${choices[@]}" 3>&2 2>&1 1>&3)
 }
 
