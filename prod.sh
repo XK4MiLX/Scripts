@@ -67,6 +67,15 @@ export NEWT_COLORS='
 title=black,
 '
 
+function system_type(){
+ TYPE_CHECK=$(dpkg -l | grep -o 'ubuntu-server ')
+ if [[ $TYPE_CHECK == "" ]]; then
+  SYSTEM_TYPE="Desktop"
+ else
+  SYSTEM_TYPE="Server"
+ fi
+}
+
 function _task {
     if [[ $TASK != "" ]]; then
         printf "${OVERWRITE}${LGREEN} [✓]  ${LGREEN}${TASK}\n"
@@ -258,9 +267,10 @@ clear_screen
 
 echo -e "$Banner"
 UBUNTU_VERSION=$(lsb_release -rs)
+system_type
 echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
 echo -e " Branch: ${GREEN}Production${RESTORE}"
-echo -e " Ubuntu version: ${CYAN}${UBUNTU_VERSION}${RESTORE}"
+echo -e " Ubuntu version: ${CYAN}${UBUNTU_VERSION}${RESTORE} Type: ${GREEN}${SYSTEM_TYPE}${RESTORE}"
 echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
 echo -e "${CYAN} 1) Install FluxCore${RESTORE}"
 echo -e "${CYAN} 2) Uninstall FluxCore${RESTORE}"
