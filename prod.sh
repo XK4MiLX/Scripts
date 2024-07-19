@@ -22,6 +22,8 @@ WHITE='\033[01;37m'
 OVERWRITE='\e[1A\e[K'
 PIN="${RED}\xF0\x9F\x93\x8C${RESTORE}"
 name="fluxcore-linux-amd64"
+HOSTS_FILE="/etc/hosts"
+
 Banner='[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m
 [38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m
 [38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m [0m[38;5;0m [0m[38;5;0m [0m[38;5;0m [0m[38;5;0m [0m[38;5;0m [0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m [0m[38;5;0m [0m[38;5;0m [0m[38;5;0m [0m[38;5;0m [0m[38;5;0m [0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m
@@ -256,6 +258,112 @@ fix_frankenstein() {
   bash fix-frankenstein.sh
 }
 
+show_entries_only() {
+    entries=$(grep -E "^[ \t]*[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" "$HOSTS_FILE" | sed 's/^[ \t]*//')
+    if [ -z "$entries" ]; then
+        whiptail --msgbox "No IPv4 entries found." 8 39 --title "Hosts File"
+    else
+        whiptail --title "Hosts File Entries" --msgbox "$entries" 20 60
+    fi
+}
+
+delete_entry() {
+    while true; do
+        entries=$(grep -E "^[ \t]*[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+" "$HOSTS_FILE" | sed 's/^[ \t]*//')
+        if [ -z "$entries" ]; then
+            whiptail --msgbox "No IPv4 entries found." 8 39 --title "Hosts File"
+            return
+        fi
+
+        menu_items=()
+        while IFS= read -r line; do
+            ip=$(echo "$line" | awk '{print $1}')
+            hostname=$(echo "$line" | awk '{print $2}')
+            menu_items+=("$ip $hostname" "")
+        done <<< "$entries"
+
+        choice=$(whiptail --title "Hosts File" --menu "Choose an entry to delete" 20 60 10 "${menu_items[@]}" 3>&1 1>&2 2>&3)
+        exitstatus=$?
+        if [ $exitstatus = 0 ]; then
+            ip=$(echo "$choice" | awk '{print $1}')
+            hostname=$(echo "$choice" | awk '{print $2}')
+            if whiptail --title "Confirm Deletion" --yesno "Are you sure you want to delete the entry for $hostname ($ip)?" 8 39; then
+                sudo sed -i "/^$ip[ \t]*$hostname/d" "$HOSTS_FILE"
+                whiptail --msgbox "Entry deleted successfully!" 8 39 --title "Success"
+            else
+                whiptail --msgbox "Entry deletion cancelled." 8 39 --title "Cancelled"
+            fi
+        elif [ $exitstatus = 1 ]; then
+            whiptail --msgbox "Entry deletion cancelled." 8 39 --title "Cancelled"
+        fi
+        break
+    done
+}
+
+add_entry() {
+    while true; do
+        hostname=$(whiptail --inputbox "Enter hostname" 8 39 --title "Add Entry" 3>&1 1>&2 2>&3)
+        exitstatus=$?
+        if [ $exitstatus = 0 ]; then
+            ip=$(whiptail --inputbox "Enter IP address" 8 39 --title "Add Entry" 3>&1 1>&2 2>&3)
+            exitstatus=$?
+            if [ $exitstatus = 0 ]; then
+                # Validate IP address format (simple validation)
+                if [[ ! "$ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                    whiptail --msgbox "Invalid IP address format." 8 39 --title "Error"
+                    continue
+                fi
+                # Validate hostname (basic check)
+                if [[ -z "$hostname" ]]; then
+                    whiptail --msgbox "Hostname cannot be empty." 8 39 --title "Error"
+                    continue
+                fi
+                # Add the new entry at the top of the /etc/hosts file
+                sudo sh -c "echo '$ip $hostname' >> $HOSTS_FILE"
+                whiptail --msgbox "Entry added successfully!" 8 39 --title "Success"
+            else
+                whiptail --msgbox "Entry addition cancelled." 8 39 --title "Cancelled"
+            fi
+        else
+            whiptail --msgbox "Entry addition cancelled." 8 39 --title "Cancelled"
+        fi
+        break
+    done
+}
+
+main_menu() {
+    while true; do
+        CHOICE=$(
+            whiptail --title "Hosts file management" --menu "Make your choice" 15 40 8 \
+            "1)" "Show hosts file"   \
+            "2)" "Add entry" \
+            "3)" "Delete entry" \
+            "4)" "Exit" 3>&2 2>&1 1>&3
+        )
+
+        case $CHOICE in
+            "1)")
+                show_entries_only
+                ;;
+            "2)")
+                add_entry
+                ;;
+            "3)")
+                delete_entry
+                ;;
+            "4)")
+                exit 0
+                ;;
+        esac
+    done
+}
+
+host_file_manage() {
+  if [[ "$SYSTEM_TYPE" == "Desktop" ]]; then
+    main_menu
+  fi
+}
+
 check_command "lsb_release" "lsb-release"
 check_command "wg-quick" "wireguard wireguard-tools udhcpc"
 
@@ -275,6 +383,9 @@ echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${CYAN} 1) Install FluxCore${RESTORE}"
 echo -e "${CYAN} 2) Uninstall FluxCore${RESTORE}"
 echo -e "${CYAN} 3) Fix Frankenstein Script${RESTORE}"
+if [[ "$SYSTEM_TYPE" == "Desktop" ]]; then
+  echo -e "${CYAN} 4) Hosts file management${RESTORE}"
+fi
 echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
 read -rp " Pick an option and hit ENTER: "
 case "$REPLY" in
@@ -293,6 +404,14 @@ case "$REPLY" in
 		clear
 		sleep 1
 		fix_frankenstein
+
+ ;;
+ 4)
+ 
+ 		clear
+                sleep 1
+		host_file_manage
+		
  ;;
  esac
  set -o history
