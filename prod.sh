@@ -165,7 +165,7 @@ Press Spacebar on the IP you want to select, THEN press ENTER." 35 60 20 \
 }
 
 daemon_setup() {
-  clear_screen
+  ## clear_screen
   echo -e "Fluxcore for Linux AMD64 - ${GREEN}Production${RESTORE}"
   echo "Please allow privileges to access hardware info to the program."
   sudo_check
@@ -187,7 +187,9 @@ daemon_setup() {
   _cmd "sudo setcap 'CAP_DAC_READ_SEARCH+eip cap_net_bind_service=+ep' /home/fluxuser/$name"
   _cmd "sudo chmod u+s,+x /home/fluxuser/$name"
   _task "Configure and start Fluxcore service"
-  get_local_ip
+  if [[ -z "$IP" ]]; then
+    get_local_ip
+  fi
   IP=${IP:-127.0.0.1}
   _cmd "sudo curl -o /lib/systemd/system/fluxcore.service https://download.fluxcore.ai/fluxcore.service"
   _cmd "sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service"
