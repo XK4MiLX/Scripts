@@ -370,8 +370,8 @@ usage() {
   echo "Usage: [-i IP] [-u]"
   echo
   echo "Options:"
-  echo "  -i IP         Install with the specified IP address."
-  echo "  -r            Remove the application."
+  echo "  -i <ip_address>  Install with the specified IP address."
+  echo "  -r               Remove the application."
   echo
 }
 
