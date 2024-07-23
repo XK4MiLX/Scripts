@@ -371,19 +371,19 @@ usage() {
   echo
   echo "Options:"
   echo "  -i IP         Install with the specified IP address."
-  echo "  -u            Uninstall the application."
+  echo "  -r            Remove the application."
   echo
 }
 
 parse_args() {
-  while getopts ":i:u" opt; do
+  while getopts ":i:r" opt; do
     case $opt in
       i)
         IP=$OPTARG
         daemon_setup
 	exit
         ;;
-      u)
+      r)
         uninstall
 	exit
         ;;
@@ -409,7 +409,7 @@ if ! command -v whiptail &> /dev/null; then
   sudo apt-get install -y whiptail >/dev/null 2>&1
 fi
 clear_screen
-
+parse_args "$@"
 echo -e "$Banner"
 UBUNTU_VERSION=$(lsb_release -rs)
 system_type
