@@ -364,6 +364,42 @@ host_file_manage() {
   fi
 }
 
+usage() {
+  echo
+  echo "Usage: [-i IP] [-u]"
+  echo
+  echo "Options:"
+  echo "  -i IP         Install with the specified IP address."
+  echo "  -u            Uninstall the application."
+  echo
+}
+
+parse_args() {
+  while getopts ":i:u" opt; do
+    case $opt in
+      i)
+        IP=$OPTARG
+        daemon_setup
+	exit
+        ;;
+      u)
+        uninstall
+	exit
+        ;;
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+	usage
+        exit 
+        ;;
+      :)
+        echo "Option -$OPTARG requires an argument. ( ex. -i 127.0.0.1 )" >&2
+	echo
+        exit 
+        ;;
+    esac
+  done
+}
+
 check_command "lsb_release" "lsb-release"
 check_command "wg-quick" "wireguard wireguard-tools udhcpc"
 
