@@ -366,6 +366,16 @@ host_file_manage() {
   fi
 }
 
+usage() {
+  echo
+  echo "Usage: [-i IP] [-u]"
+  echo
+  echo "Options:"
+  echo "  -i IP         Install with the specified IP address."
+  echo "  -u            Uninstall the application."
+  echo
+}
+
 parse_args() {
   while getopts ":i:u" opt; do
     case $opt in
@@ -380,7 +390,7 @@ parse_args() {
         ;;
       \?)
         echo "Invalid option: -$OPTARG" >&2
-	echo
+	usage
         exit 
         ;;
       :)
