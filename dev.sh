@@ -145,7 +145,8 @@ service_exists() {
 }
 
 get_local_ip() {
- ip_list=($(ip addr show | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1 | uniq))
+ ip_list=($(ip addr show | grep 'inet ' | awk '{print $2}' | cut -d'/' -f1) $(hostname -I))
+ ip_list=($(echo "${ip_list[@]}" | tr ' ' '\n' | sort -u | tr '\n' ' '))
  elements=${#ip_list[@]}
  choices=()
  for (( i=0; i<$elements; i++ )); do
