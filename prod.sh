@@ -372,20 +372,20 @@ usage() {
   echo "Usage: [-i IP] [-u]"
   echo
   echo "Options:"
-  echo "  -i IP         Install with the specified IP address."
-  echo "  -u            Uninstall the application."
+  echo "  -i <ip_address>  Install with the specified IP address."
+  echo "  -r               Remove the application."
   echo
 }
 
 parse_args() {
-  while getopts ":i:u" opt; do
+  while getopts ":i:r" opt; do
     case $opt in
       i)
         IP=$OPTARG
         daemon_setup
 	exit
         ;;
-      u)
+      r)
         uninstall
 	exit
         ;;
