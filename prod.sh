@@ -380,11 +380,13 @@ parse_args() {
         ;;
       \?)
         echo "Invalid option: -$OPTARG" >&2
-        exit 1
+	echo
+        exit 
         ;;
       :)
-        echo "Option -$OPTARG requires an argument." >&2
-        exit 1
+        echo "Option -$OPTARG requires an argument. ( ex. -i 127.0.0.1 )" >&2
+	echo
+        exit 
         ;;
     esac
   done
@@ -398,8 +400,8 @@ if ! command -v whiptail &> /dev/null; then
   sudo apt-get install -y whiptail >/dev/null 2>&1
 fi
 
-parse_args "$@"
 clear_screen
+parse_args "$@"
 echo -e "$Banner"
 UBUNTU_VERSION=$(lsb_release -rs)
 system_type
