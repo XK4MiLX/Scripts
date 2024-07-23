@@ -364,6 +364,30 @@ host_file_manage() {
   fi
 }
 
+parse_args() {
+  while getopts ":i:u" opt; do
+    case $opt in
+      i)
+        IP=$OPTARG
+        daemon_setup
+	exit
+        ;;
+      u)
+        uninstall
+	exit
+        ;;
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+        exit 1
+        ;;
+      :)
+        echo "Option -$OPTARG requires an argument." >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+
 check_command "lsb_release" "lsb-release"
 check_command "wg-quick" "wireguard wireguard-tools udhcpc"
 
@@ -372,7 +396,6 @@ if ! command -v whiptail &> /dev/null; then
   sudo apt-get install -y whiptail >/dev/null 2>&1
 fi
 clear_screen
-
 echo -e "$Banner"
 UBUNTU_VERSION=$(lsb_release -rs)
 system_type
@@ -380,6 +403,7 @@ echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e " Branch: ${GREEN}Production${RESTORE}"
 echo -e " Ubuntu version: ${CYAN}${UBUNTU_VERSION}${RESTORE} Type: ${CYAN}${SYSTEM_TYPE}${RESTORE}"
 echo -e "${YELLOW}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${RESTORE}"
+parse_args "$@"
 echo -e "${CYAN} 1) Install FluxCore${RESTORE}"
 echo -e "${CYAN} 2) Uninstall FluxCore${RESTORE}"
 echo -e "${CYAN} 3) Fix Frankenstein Script${RESTORE}"
