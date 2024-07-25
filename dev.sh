@@ -367,7 +367,7 @@ host_file_manage() {
 
 usage() {
   echo
-  echo "Usage: [-i IP] [-u]"
+  echo "Usage: [-i <ip_address>] [-u]"
   echo
   echo "Options:"
   echo "  -i <ip_address>  Install with the specified IP address."
