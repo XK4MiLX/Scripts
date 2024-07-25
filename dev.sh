@@ -187,7 +187,7 @@ daemon_setup() {
   _cmd "sudo chown fluxuser:fluxuser /home/fluxuser/$name && sudo chmod +x /home/fluxuser/$name"
   _cmd "sudo setcap 'CAP_DAC_READ_SEARCH+eip cap_net_bind_service=+ep' /home/fluxuser/$name"
   _cmd "sudo chmod u+s,+x /home/fluxuser/$name"
-  _cmd "ln -sf /home/fluxuser/$name /usr/local/bin"
+  _cmd "sudo ln -sf /home/fluxuser/$name /usr/local/bin"
   _task "Configure and start Fluxcore service"
   if [[ -z "$IP" ]]; then
     get_local_ip
