@@ -369,34 +369,66 @@ host_file_manage() {
 
 usage() {
   echo
-  echo "Usage: [-i <ip_address>] [-u]"
+  echo "Usage: [-i <ip_address>] [-r] [-e <email>]"
   echo
   echo "Options:"
   echo "  -i <ip_address>  Install with the specified IP address."
   echo "  -r               Remove the application."
+  echo "  -e <email>       Assign a machine to the specified email address. The email must exist in the system."
   echo
 }
 
+validate_email() {
+  local email="$1"
+  local regex="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+  if [[ $email =~ $regex ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
 parse_args() {
-  while getopts ":i:r" opt; do
+  while getopts ":i:re:" opt; do
     case $opt in
       i)
         IP=$OPTARG
         daemon_setup
 	exit
         ;;
+      e)
+        EMAIL=$OPTARG
+	if ! validate_email "$EMAIL"; then
+          echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
+	  echo
+	  exit 
+	fi
+	sudo /home/fluxuser/$name -email $EMAIL
+	exit
+        ;;
       r)
         uninstall
 	exit
         ;;
+	
       \?)
         echo "Invalid option: -$OPTARG" >&2
 	usage
         exit 
         ;;
       :)
-        echo "Option -$OPTARG requires an argument. ( ex. -i 127.0.0.1 )" >&2
-	echo
+        case $OPTARG in
+          i)
+            echo "Error: Option -i requires an argument. (ex. -i 127.0.0.1)" >&2
+            ;;
+          e)
+            echo "Error: Option -e requires an argument. (ex. -e user@example.com)" >&2
+            ;;
+          *)
+            echo "Error: Option -$OPTARG requires an argument." >&2
+            ;;
+        esac
+        usage
         exit 
         ;;
     esac
