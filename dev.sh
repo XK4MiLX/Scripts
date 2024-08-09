@@ -193,7 +193,11 @@ daemon_setup() {
   fi
   IP=${IP:-127.0.0.1}
   _cmd "sudo curl -o /lib/systemd/system/fluxcore.service https://pouwdev.runonflux.io/update/fluxcore.service"
-  _cmd "sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service"
+  if [[ -z "$EMAIL" ]]; then
+    _cmd "sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service"
+  else
+    _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $email\"|' /lib/systemd/system/fluxcore.service"
+  fi
   _cmd "sudo systemctl daemon-reload"
   _cmd "sudo systemctl enable fluxcore.service"
   _cmd "sudo systemctl start fluxcore.service"
@@ -369,12 +373,12 @@ host_file_manage() {
 
 usage() {
   echo
-  echo "Usage: [-i <ip_address>] [-r] [-e <email>]"
+  echo "Usage: [-i <ip_address> [<email>]] [-r] [-e <email>]"
   echo
   echo "Options:"
-  echo "  -i <ip_address>  Install with the specified IP address."
-  echo "  -r               Remove the application."
-  echo "  -e <email>       Assign a machine to the specified email address. The email must exist in the system."
+  echo "  -i <ip_address> [<email>]  Install with the specified IP address. Optionally, assign the machine to the specified email address. The email must exist in the system."
+  echo "  -r                         Remove the application."
+  echo "  -e <email>                 Assign a machine to the specified email address. The email must exist in the system."
   echo
 }
 
@@ -392,7 +396,8 @@ parse_args() {
   while getopts ":i:re:" opt; do
     case $opt in
       i)
-        IP=$OPTARG
+        IP=$2
+        EMAIL=$3
         daemon_setup
 	exit
         ;;
@@ -423,9 +428,6 @@ parse_args() {
             ;;
           e)
             echo "Error: Option -e requires an argument. (ex. -e user@example.com)" >&2
-            ;;
-          *)
-            echo "Error: Option -$OPTARG requires an argument." >&2
             ;;
         esac
         usage
