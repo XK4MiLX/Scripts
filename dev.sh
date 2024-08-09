@@ -396,8 +396,8 @@ parse_args() {
   while getopts ":i:hre:" opt; do
     case $opt in
       i)
-        IP=$2
-        EMAIL=$3
+      	IP=$OPTARG
+     	EMAIL="${!OPTIND}"
         daemon_setup
 	exit
         ;;
