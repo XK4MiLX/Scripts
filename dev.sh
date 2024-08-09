@@ -393,7 +393,7 @@ validate_email() {
 }
 
 parse_args() {
-  while getopts ":i:re:" opt; do
+  while getopts ":i:hre:" opt; do
     case $opt in
       i)
         IP=$2
@@ -415,7 +415,10 @@ parse_args() {
         uninstall
 	exit
         ;;
-	
+      h)
+        usage
+	exit
+        ;;
       \?)
         echo "Invalid option: -$OPTARG" >&2
 	usage
