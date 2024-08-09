@@ -398,6 +398,11 @@ parse_args() {
       i)
       	IP=$OPTARG
      	EMAIL="${!OPTIND}"
+        if [[ -n "$EMAIL" ]] && ! validate_email "$EMAIL"; then
+          echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
+	  echo
+	  exit 
+	fi
         daemon_setup
 	exit
         ;;
