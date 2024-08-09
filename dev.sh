@@ -408,7 +408,7 @@ parse_args() {
 	  echo
 	  exit 
 	fi
-	sudo /home/fluxuser/$name -email $EMAIL
+	sudo /home/fluxuser/$name -setOwner $EMAIL
 	exit
         ;;
       r)
