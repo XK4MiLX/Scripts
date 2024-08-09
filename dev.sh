@@ -398,6 +398,7 @@ parse_args() {
       i)
       	IP=$OPTARG
      	EMAIL="${!OPTIND}"
+        echo -e "Mail: ${!OPTIND}"
         daemon_setup
 	exit
         ;;
