@@ -397,6 +397,11 @@ parse_args() {
     case $opt in
       i)
       	IP=$OPTARG
+        if [[ ! "$IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && [[ -n "$IP" ]]; then
+          echo "Error: Invalid ip format. (ex. 127.0.0.1)" >&2
+	  echo
+	  exit
+        fi
      	EMAIL="${!OPTIND}"
         if [[ -n "$EMAIL" ]] && ! validate_email "$EMAIL"; then
           echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
