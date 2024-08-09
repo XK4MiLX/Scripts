@@ -379,6 +379,7 @@ usage() {
   echo "  -i <ip_address> [<email>]  Install with the specified IP address. Optionally, assign the machine to the specified email address. The email must exist in the system."
   echo "  -r                         Remove the application."
   echo "  -e <email>                 Assign a machine to the specified email address. The email must exist in the system."
+  echo "  -h                         Show this help message."
   echo
 }
 
@@ -399,39 +400,39 @@ parse_args() {
       	IP=$OPTARG
         if [[ ! "$IP" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]] && [[ -n "$IP" ]]; then
           echo "Error: Invalid ip format. (ex. 127.0.0.1)" >&2
-	  echo
-	  exit
+	        echo
+	        exit
         fi
-     	EMAIL="${!OPTIND}"
+     	  EMAIL="${!OPTIND}"
         if [[ -n "$EMAIL" ]] && ! validate_email "$EMAIL"; then
           echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
-	  echo
-	  exit 
-	fi
+	        echo
+	        exit 
+      	fi
         daemon_setup
-	exit
+	      exit
         ;;
       e)
         EMAIL=$OPTARG
-	if ! validate_email "$EMAIL"; then
+	      if ! validate_email "$EMAIL"; then
           echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
-	  echo
-	  exit 
-	fi
-	sudo /home/fluxuser/$name -setOwner $EMAIL
-	exit
+	        echo
+	        exit 
+	      fi
+	      sudo /home/fluxuser/$name -setOwner $EMAIL
+	      exit
         ;;
       r)
         uninstall
-	exit
+	      exit
         ;;
       h)
         usage
-	exit
+	      exit
         ;;
       \?)
         echo "Invalid option: -$OPTARG" >&2
-	usage
+	      usage
         exit 
         ;;
       :)
@@ -494,7 +495,7 @@ case "$REPLY" in
   4)
  
  		clear
-                sleep 1
+    sleep 1
 		host_file_manage	
  ;;
  esac
