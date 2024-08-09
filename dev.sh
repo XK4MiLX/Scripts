@@ -196,7 +196,7 @@ daemon_setup() {
   if [[ -z "$EMAIL" ]]; then
     _cmd "sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service"
   else
-    _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $email\"|' /lib/systemd/system/fluxcore.service"
+    _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL\"|' /lib/systemd/system/fluxcore.service"
   fi
   _cmd "sudo systemctl daemon-reload"
   _cmd "sudo systemctl enable fluxcore.service"
