@@ -379,6 +379,7 @@ usage() {
   echo "  -i <ip_address> [<email>]  Install with the specified IP address. Optionally, assign the machine to the specified email address. The email must exist in the system."
   echo "  -r                         Remove the application."
   echo "  -e <email>                 Assign a machine to the specified email address. The email must exist in the system."
+  echo "  -u                         Update daemon."
   echo "  -h                         Show this help message."
   echo
 }
@@ -394,7 +395,7 @@ validate_email() {
 }
 
 parse_args() {
-  while getopts ":i:hre:" opt; do
+  while getopts ":i:hrue:" opt; do
     case $opt in
       i)
       	IP=$OPTARG
@@ -406,33 +407,41 @@ parse_args() {
      	  EMAIL="${!OPTIND}"
         if [[ -n "$EMAIL" ]] && ! validate_email "$EMAIL"; then
           echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
-	        echo
-	        exit 
+	  echo
+	  exit 
       	fi
         daemon_setup
-	      exit
+	exit
         ;;
       e)
         EMAIL=$OPTARG
-	      if ! validate_email "$EMAIL"; then
-          echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
-	        echo
-	        exit 
-	      fi
-	      sudo /home/fluxuser/$name -setOwner $EMAIL
-	      exit
+	  if ! validate_email "$EMAIL"; then
+            echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
+	    echo
+	    exit 
+	  fi
+	   sudo /home/fluxuser/$name -setOwner $EMAIL
+	   exit
         ;;
       r)
         uninstall
-	      exit
+	exit
+        ;;
+      u)
+        if [[ -f /home/fluxuser/$name ]]; then
+          sudo /home/fluxuser/$name -update
+	else
+          echo "Error: FluxCore daemon not installed" >&2
+        fi
+	exit
         ;;
       h)
         usage
-	      exit
+	exit
         ;;
       \?)
         echo "Invalid option: -$OPTARG" >&2
-	      usage
+	usage
         exit 
         ;;
       :)
