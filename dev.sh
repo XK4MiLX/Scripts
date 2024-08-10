@@ -21,6 +21,7 @@ LCYAN='\033[01;36m'
 WHITE='\033[01;37m'
 OVERWRITE='\e[1A\e[K'
 PIN="${RED}\xF0\x9F\x93\x8C${RESTORE}"
+CLOCK="${GREEN}\xE2\x8C\x9B${NC}"
 name="fluxcore-linux-amd64"
 HOSTS_FILE="/etc/hosts"
 
@@ -429,6 +430,7 @@ parse_args() {
         ;;
       u)
         if sudo test -f "/home/fluxuser/$name"; then
+	  echo -e " ${CLOCK} Update in progres..."
           sudo /home/fluxuser/$name -update
 	  echo
 	else
