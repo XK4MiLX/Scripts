@@ -21,7 +21,6 @@ LCYAN='\033[01;36m'
 WHITE='\033[01;37m'
 OVERWRITE='\e[1A\e[K'
 PIN="${RED}\xF0\x9F\x93\x8C${RESTORE}"
-CLOCK="${GREEN}\xE2\x8C\x9B${RESTORE}"
 name="fluxcore-linux-amd64"
 HOSTS_FILE="/etc/hosts"
 
@@ -374,7 +373,7 @@ host_file_manage() {
 
 usage() {
   echo
-  echo "Usage: [-i <ip_address> [<email>]] [-r] [-e <email>]"
+  echo "Usage: [-i <ip_address> [<email>]] [-r] [-u] [-e <email>]"
   echo
   echo "Options:"
   echo "  -i <ip_address> [<email>]  Install with the specified IP address. Optionally, assign the machine to the specified email address. The email must exist in the system."
@@ -408,44 +407,44 @@ parse_args() {
      	  EMAIL="${!OPTIND}"
         if [[ -n "$EMAIL" ]] && ! validate_email "$EMAIL"; then
           echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
-	  echo
-	  exit 
+	        echo
+	        exit 
       	fi
         daemon_setup
-	exit
+	      exit
         ;;
       e)
         EMAIL=$OPTARG
-	  if ! validate_email "$EMAIL"; then
-            echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
-	    echo
-	    exit 
-	  fi
-	   sudo /home/fluxuser/$name -setOwner $EMAIL
-	   exit
+	      if ! validate_email "$EMAIL"; then
+          echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
+	        echo
+	        exit 
+	      fi
+	      sudo /home/fluxuser/$name -setOwner $EMAIL
+	      exit
         ;;
       r)
         uninstall
-	exit
+	      exit
         ;;
       u)
         if sudo test -f "/home/fluxuser/$name"; then
-	  echo -e "${CLOCK}Update in progress..."
+	        echo -e "${CLOCK} Update in progress..."
           sudo /home/fluxuser/$name -update
-	  echo
-	else
+	        echo
+	      else
           echo "Error: FluxCore daemon not installed" >&2
-	  echo
+          echo
         fi
-	exit
+        exit
         ;;
       h)
         usage
-	exit
+	      exit
         ;;
       \?)
         echo "Invalid option: -$OPTARG" >&2
-	usage
+	      usage
         exit 
         ;;
       :)
