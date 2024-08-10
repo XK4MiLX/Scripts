@@ -430,7 +430,7 @@ parse_args() {
         ;;
       u)
         if sudo test -f "/home/fluxuser/$name"; then
-	  echo -e "${CLOCK} Update in progress..."
+	  echo -e "${CLOCK}Update in progress..."
           sudo /home/fluxuser/$name -update
 	  echo
 	else
