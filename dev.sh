@@ -379,7 +379,7 @@ usage() {
   echo "  -i <ip_address> [<email>]  Install with the specified IP address. Optionally, assign the machine to the specified email address. The email must exist in the system."
   echo "  -r                         Remove the application."
   echo "  -e <email>                 Assign a machine to the specified email address. The email must exist in the system."
-  echo "  -u                         Update daemon."
+  echo "  -u                         Update FluxCore daemon."
   echo "  -h                         Show this help message."
   echo
 }
@@ -432,6 +432,7 @@ parse_args() {
           sudo /home/fluxuser/$name -update
 	else
           echo "Error: FluxCore daemon not installed" >&2
+	  echo
         fi
 	exit
         ;;
