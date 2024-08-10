@@ -430,6 +430,7 @@ parse_args() {
       u)
         if sudo test -f "/home/fluxuser/$name"; then
           sudo /home/fluxuser/$name -update
+	  echo
 	else
           echo "Error: FluxCore daemon not installed" >&2
 	  echo
