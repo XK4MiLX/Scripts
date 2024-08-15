@@ -145,16 +145,16 @@ service_exists() {
         if systemctl status &>/dev/null; then
             break
         else
-            echo -e "Failed to connect to systemd bus. Attempt $attempt/$retries."
+            echo -e "${OVERWRITE}${LRED} [X] Failed to connect to systemd bus. Attempt $attempt/$retries. ${RESTORE}"
             ((attempt++))
             sleep "$delay"
         fi
     done
 
-    if (( attempt > retries )); then
-        echo -e "Failed to connect to systemd bus after $retries attempts."
-        echo -e "Operation aborted..."
-        echo -e ""
+    if (( attempt < retries )); then
+        echo -e "${OVERWRITE}${LRED} [X] Failed to connect to systemd bus. Attempt $attempt/$retries. ${RESTORE}"
+        echo -e "${OVERWRITE}${LRED} [X] Failed to connect to systemd bus after $retries attempts. Operation aborted... ${RESTORE}"
+        echo 
         exit 1
     fi
 
