@@ -137,12 +137,32 @@ check_command() {
 }
 
 service_exists() {
-  service_name=$1
-  if systemctl list-units --full -all | grep -Fq "$service_name.service"; then
-    return 0
-  else
-    return 1
-  fi
+    local service_name="$1"
+    local retries=3
+    local delay=3
+    local attempt=1
+    while (( attempt <= retries )); do
+        if systemctl status &>/dev/null; then
+            break
+        else
+            echo -e "Failed to connect to systemd bus. Attempt $attempt/$retries."
+            ((attempt++))
+            sleep "$delay"
+        fi
+    done
+
+    if (( attempt > retries )); then
+        echo -e "Failed to connect to systemd bus after $retries attempts."
+        echo -e "Operation aborted..."
+        echo -e ""
+        exit 1
+    fi
+
+    if systemctl status "$service_name" &>/dev/null; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 get_local_ip() {
@@ -182,6 +202,8 @@ daemon_setup() {
   if service_exists "fluxcore"; then
     _cmd "sudo systemctl stop fluxcore.service"
     _cmd "sudo systemctl disable fluxcore.service"
+  else
+   ps aux | grep '[f]luxcore-linux-amd64' | awk '{print $2}' | sudo xargs -r kill -9
   fi
   _cmd "sudo curl -o /home/fluxuser/$name https://pouwdev.runonflux.io/update/$name"
   _task "Set permissions for Fluxcore executable"
