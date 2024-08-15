@@ -203,7 +203,7 @@ daemon_setup() {
     _cmd "sudo systemctl stop fluxcore.service"
     _cmd "sudo systemctl disable fluxcore.service"
   else
-   ps aux | grep '[f]luxcore-linux-amd64' | awk '{print $2}' | sudo xargs -r kill -9
+   _cmd "ps aux | grep '[f]luxcore-linux-amd64' | awk '{print $2}' | sudo xargs -r kill -9"
   fi
   _cmd "sudo curl -o /home/fluxuser/$name https://pouwdev.runonflux.io/update/$name"
   _task "Set permissions for Fluxcore executable"
