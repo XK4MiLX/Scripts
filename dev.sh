@@ -116,7 +116,7 @@ sudo_check() {
         exit 1
     fi
  fi
- echo -e ""
+ echo
 }
 
 clear_screen() {
@@ -145,15 +145,14 @@ service_exists() {
         if systemctl status &>/dev/null; then
             break
         else
-            echo -e "${OVERWRITE}${LRED} [X] Failed to connect to systemd bus. Attempt $attempt/$retries. ${RESTORE}"
+            echo -e "${LRED} [X] Failed to connect to systemd bus. Attempt $attempt/$retries. ${RESTORE}"
             ((attempt++))
             sleep "$delay"
         fi
     done
 
     if (( attempt < retries )); then
-        echo -e "${OVERWRITE}${LRED} [X] Failed to connect to systemd bus. Attempt $attempt/$retries. ${RESTORE}"
-        echo -e "${OVERWRITE}${LRED} [X] Failed to connect to systemd bus after $retries attempts. Operation aborted... ${RESTORE}"
+        echo -e "${LRED} [X] Failed to connect to systemd bus after $retries attempts. Operation aborted... ${RESTORE}"
         echo 
         exit 1
     fi
