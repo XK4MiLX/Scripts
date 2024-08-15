@@ -97,7 +97,7 @@ function _cmd {
     while read line; do 
         printf "      ${line}\n"
     done < debug.log
-    printf "\n"
+    printf "${RESTORE}\n"
     rm debug.log
     set -o history
     exit 1
