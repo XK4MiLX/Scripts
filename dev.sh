@@ -151,7 +151,7 @@ service_exists() {
         fi
     done
 
-    if (( attempt < retries )); then
+    if (( attempt > retries )); then
         echo -e "${LRED} [X] Failed to connect to systemd bus after $retries attempts. Operation aborted... ${RESTORE}"
         echo 
         exit 1
