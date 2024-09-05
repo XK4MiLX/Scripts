@@ -157,7 +157,7 @@ service_exists() {
         exit 1
     fi
 
-    if systemctl status "$service_name" &>/dev/null; then
+    if systemctl status "$service_name"; then
         echo "1"
         return 0
     else
