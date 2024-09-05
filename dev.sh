@@ -157,7 +157,7 @@ service_exists() {
         exit 1
     fi
 
-    if systemctl list-units --type=service --all | grep -q "^${service_name}.service"; then
+    if systemctl list-units --type=service --all | grep "^${service_name}.service"; then
         return 0
     else
         return 1
@@ -248,7 +248,6 @@ uninstall() {
   _cmd "sudo systemctl disable fluxcore.service"
   _cmd "sudo rm /lib/systemd/system/fluxcore.service"
  else
-  echo "3"
   _cmd "ps aux | grep '[f]luxcore-linux-amd64' | awk '{print $2}' | sudo xargs -r kill -9"
  fi
 
