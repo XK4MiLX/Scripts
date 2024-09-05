@@ -252,7 +252,7 @@ uninstall() {
   _cmd "ps aux | grep '[f]luxcore-linux-amd64' | awk '{print $2}' | sudo xargs -r kill -9"
  fi
 
- if [[ -f  /home/fluxuser/$name ]]; then
+ if sudo test -f "/home/fluxuser/$name"; then
   _task "Removing fluxcore binary" 
   _cmd "sudo rm /home/fluxuser/$name"
  fi
