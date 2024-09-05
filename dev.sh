@@ -250,6 +250,7 @@ uninstall() {
   _cmd "sudo systemctl disable fluxcore.service"
   _cmd "sudo rm /lib/systemd/system/fluxcore.service"
  else
+  echo "3"
   _cmd "ps aux | grep '[f]luxcore-linux-amd64' | awk '{print $2}' | sudo xargs -r kill -9"
  fi
 
