@@ -157,11 +157,9 @@ service_exists() {
         exit 1
     fi
 
-    if systemctl status "$service_name"; then
-        echo "1"
+    if systemctl list-units --type=service --all | grep -q "^${service_name}.service"; then
         return 0
     else
-        echo "2"
         return 1
     fi
 }
