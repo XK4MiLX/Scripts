@@ -158,8 +158,10 @@ service_exists() {
     fi
 
     if systemctl status "$service_name" &>/dev/null; then
+        echo "1"
         return 0
     else
+        echo "2"
         return 1
     fi
 }
