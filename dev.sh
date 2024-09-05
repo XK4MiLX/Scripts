@@ -238,6 +238,10 @@ uninstall() {
  clear_screen
  echo "Please allow privileges to remove program"
  sudo_check
+ if [[ -f /home/fluxuser/$name ]]; then
+    _task "Remove application and settings from computer and server"
+    _cmd "sudo /home/fluxuser/$name -uninstall > /dev/null 2>&1"
+ fi
  if service_exists "fluxcore"; then
   _task "Removing fluxcore service" 
   _cmd "sudo systemctl stop fluxcore.service"
