@@ -116,7 +116,7 @@ sudo_check() {
         exit 1
     fi
  fi
- echo
+ echo -e ""
 }
 
 clear_screen() {
@@ -136,32 +136,26 @@ check_command() {
   fi
 }
 
-service_exists() {
-    local service_name="$1"
-    local retries=3
-    local delay=3
-    local attempt=1
-    while (( attempt <= retries )); do
-        if systemctl status &>/dev/null; then
-            break
-        else
-            echo -e "${LRED} [X] Failed to connect to systemd bus. Attempt $attempt/$retries. ${RESTORE}"
-            ((attempt++))
-            sleep "$delay"
-        fi
-    done
+systemctl_check() {
+  local retries=3
+  local delay=3
+  local attempt=1
+  while (( attempt <= retries )); do
+      if systemctl status &>/dev/null; then
+          break
+      else
+          echo -e "${LRED} [X] Failed to connect to systemd bus. Attempt $attempt/$retries. ${RESTORE}"
+          ((attempt++))
+          sleep "$delay"
+      fi
+  done
 
-    if (( attempt > retries )); then
-        echo -e "${LRED} [X] Failed to connect to systemd bus after $retries attempts. Operation aborted... ${RESTORE}"
-        echo 
-        exit 1
-    fi
-
-    if systemctl list-units --type=service --all | grep "^${service_name}.service"; then
-        return 0
-    else
-        return 1
-    fi
+  if (( attempt > retries )); then
+      echo -e "${LRED} [X] Failed to connect to systemd bus after $retries attempts. Operation aborted... ${RESTORE}"
+      echo -e "${LRED} [i] Consider rebooting your PC if the issue persists.${RESTORE}"
+      echo 
+      exit 1
+  fi
 }
 
 get_local_ip() {
@@ -198,6 +192,7 @@ daemon_setup() {
     fi
   fi
   _task "Download the Fluxcore executable"
+  systemctl_check
   STATUS=$(systemctl is-active fluxcore)
   if [[ $STATUS == "active" ]]; then
     _cmd "sudo systemctl stop fluxcore.service"
@@ -242,20 +237,29 @@ uninstall() {
  clear_screen
  echo "Please allow privileges to remove program"
  sudo_check
+
  if sudo test -f "/home/fluxuser/$name"; then
    _task "Remove application and settings from computer and server"
    _cmd "sudo /home/fluxuser/$name -uninstall > /dev/null 2>&1"
  fi
  
+ systemctl_check
+ STATUS=$(systemctl is-active fluxcore)
+ if [[ $STATUS == "active" ]]; then
+   _cmd "sudo systemctl stop fluxcore.service"
+   _cmd "sudo systemctl disable fluxcore.service"
+ fi
+ 
  if sudo test -f /lib/systemd/system/fluxcore.service ; then
-  _task "Removing fluxcore service" 
-  _cmd "sudo rm /lib/systemd/system/fluxcore.service"
+   _task "Removing fluxcore service" 
+   _cmd "sudo rm /lib/systemd/system/fluxcore.service"
  fi
 
  if sudo test -f "/home/fluxuser/$name"; then
-  _task "Removing fluxcore binary" 
-  _cmd "sudo rm /home/fluxuser/$name"
+   _task "Removing fluxcore binary" 
+   _cmd "sudo rm /home/fluxuser/$name"
  fi
+
  _task "Reloading systemctl daemon" 
  _cmd "sudo systemctl daemon-reload"
  if [[ -d  /home/fluxuser ]]; then
