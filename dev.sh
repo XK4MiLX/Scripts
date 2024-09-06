@@ -198,11 +198,15 @@ daemon_setup() {
     fi
   fi
   _task "Download the Fluxcore executable"
-  if service_exists "fluxcore"; then
+  STATUS=$(systemctl is-active fluxcore)
+  if [[ $STATUS == "active" ]]; then
     _cmd "sudo systemctl stop fluxcore.service"
     _cmd "sudo systemctl disable fluxcore.service"
   else
-   _cmd "ps aux | grep '[f]luxcore-linux-amd64' | awk '{print $2}' | sudo xargs -r kill -9"
+    PID=$(pgrep -f $name)
+    if [ ! -z "$PID" ]; then
+      sudo kill -9 $PID
+    fi
   fi
   _cmd "sudo curl -o /home/fluxuser/$name https://pouwdev.runonflux.io/update/$name"
   _task "Set permissions for Fluxcore executable"
@@ -242,13 +246,10 @@ uninstall() {
    _task "Remove application and settings from computer and server"
    _cmd "sudo /home/fluxuser/$name -uninstall > /dev/null 2>&1"
  fi
- if service_exists "fluxcore"; then
+ 
+ if sudo test -f /lib/systemd/system/fluxcore.service ; then
   _task "Removing fluxcore service" 
-  _cmd "sudo systemctl stop fluxcore.service"
-  _cmd "sudo systemctl disable fluxcore.service"
   _cmd "sudo rm /lib/systemd/system/fluxcore.service"
- else
-  _cmd "ps aux | grep '[f]luxcore-linux-amd64' | awk '{print $2}' | sudo xargs -r kill -9"
  fi
 
  if sudo test -f "/home/fluxuser/$name"; then
