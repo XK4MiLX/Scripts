@@ -415,7 +415,7 @@ host_file_manage() {
 
 usage() {
   echo
-  echo "Usage: [-i <ip_address> [<email>] [-cluster <name>]] [-r] [-u] [-e <email>] [-c <name>]"
+  echo "Usage: [-i <ip_address> [<email>] [-cluster <name>]] [-r] [-u] [-e <email>]"
   echo
   echo "Options:"
   echo "  -i <ip_address> [<email>] [-cluster <name>]  Install with the specified IP address."
@@ -424,7 +424,6 @@ usage() {
   echo "  -r                                           Remove the application."
   echo "  -e <email>                                   Assign a machine to the specified email address. The email must exist in the system."
   echo "  -u                                           Update FluxCore daemon."
-  echo "  -c <name>                                    Assign a machine to the specified cluster."
   echo "  -h                                           Show this help message."
   echo
 }
@@ -440,6 +439,13 @@ validate_email() {
 }
 
 parse_args() {
+
+  if [[ "$1" =~ ^-([a-zA-Z]{3,}) ]]; then
+     echo "Invalid option: $1" >&2
+     usage
+    exit 1
+  fi
+  
   while getopts ":i:hrue:c:" opt; do
     case $opt in
       i)
@@ -490,18 +496,6 @@ parse_args() {
         fi
         exit
         ;;
-      c)
-        if sudo test -f "/home/fluxuser/$name"; then
-          CLUSTER_NAME=$OPTARG
-          echo -e "${CLOCK} Server will join cluster: $CLUSTER_NAME"
-          sudo /home/fluxuser/$name -cluster $OPTARG
-	        echo
-	      else
-          echo "Error: FluxCore daemon not installed" >&2
-          echo
-        fi
-        exit
-        ;;
       h)
         usage
 	      exit
@@ -518,9 +512,6 @@ parse_args() {
             ;;
           e)
             echo "Error: Option -e requires an argument. (ex. -e user@example.com)" >&2
-            ;;
-          c)
-            echo "Error: Option -c requires an argument. (ex. -c myCluster)" >&2
             ;;
         esac
         usage
