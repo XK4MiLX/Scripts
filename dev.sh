@@ -438,7 +438,7 @@ validate_email() {
 }
 
 parse_args() {
-  while getopts ":i:hrue:cluster:" opt; do
+  while getopts ":i:hrue:c:" opt; do
     case $opt in
       i)
       	IP=$OPTARG
@@ -517,7 +517,7 @@ parse_args() {
           e)
             echo "Error: Option -e requires an argument. (ex. -e user@example.com)" >&2
             ;;
-          cluster)
+          c)
             echo "Error: Option -cluster requires an argument. (ex. -cluster myCluster)" >&2
             ;;
         esac
