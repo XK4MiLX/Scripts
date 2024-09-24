@@ -457,11 +457,9 @@ parse_args() {
         fi
         OPTIND=$((OPTIND + 1)) 
         NEXT_ARG="${!OPTIND}"
-	echo -e "NEXT_ARG: ${NEXT_ARG}"
         if [[ "$NEXT_ARG" == "-cluster" ]]; then
           OPTIND=$((OPTIND + 1))  
           CLUSTER_NAME="${!OPTIND}"  
-	  echo -e "Cluster:${CLUSTER_NAME}"
         fi
 
 	sleep 10
