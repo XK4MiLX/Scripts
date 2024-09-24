@@ -422,7 +422,7 @@ usage() {
   echo "  -r                                           Remove the application."
   echo "  -e <email>                                   Assign a machine to the specified email address. The email must exist in the system."
   echo "  -u                                           Update FluxCore daemon."
-  echo "  -cluster <name>                              Assign a machine to the specified cluster."
+  echo "  -c <name>                                    Assign a machine to the specified cluster."
   echo "  -h                                           Show this help message."
   echo
 }
@@ -488,7 +488,7 @@ parse_args() {
         fi
         exit
         ;;
-      cluster)
+      c)
         if sudo test -f "/home/fluxuser/$name"; then
           CLUSTER_NAME=$OPTARG
           echo -e "${CLOCK} Server will join cluster: $CLUSTER_NAME"
