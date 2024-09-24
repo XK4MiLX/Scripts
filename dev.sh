@@ -441,7 +441,6 @@ validate_email() {
 parse_args() {
   STRING=$1
   LENGTH=${#STRING}
-  sleep 5
   if [[ $LENGTH -gt 2 ]]; then
      echo "Invalid option: $1" >&2
      usage
