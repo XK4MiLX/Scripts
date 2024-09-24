@@ -235,7 +235,7 @@ daemon_setup() {
 
   echo -e "${PIN} ${CYAN}You can access it here: ${YELLOW}http://$IP:18180${RESTORE}"
   if [[ "$CLUSTER_NAME" != "" ]]; then
-   echo -e "${PIN} ${CYAN}Server will join Cluster: ${GREEN}${$CLUSTER_NAME}${RESTORE}"
+   echo -e "${PIN} ${CYAN}Server will join Cluster: ${GREEN}${CLUSTER_NAME}${RESTORE}"
   fi
   echo -e "${PIN} ${CYAN}Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name.${RESTORE}"
   echo -e "${PIN} ${CYAN}You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', ... ${RESTORE}"
