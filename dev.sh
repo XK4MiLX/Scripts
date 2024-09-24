@@ -66,7 +66,7 @@ CLOCK="${GREEN}\xE2\x8C\x9B${RESTORE}"
 name="fluxcore-linux-amd64"
 HOSTS_FILE="/etc/hosts"
 BASE_DOMAIN="https://pouwdev.runonflux.io/update"
-BRANCH="Dev"
+BRANCH="DEV"
 export NEWT_COLORS='
 title=black,
 '
