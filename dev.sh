@@ -455,7 +455,7 @@ parse_args() {
           echo
           exit 
         fi
-
+        OPTIND=$((OPTIND + 1)) 
         NEXT_ARG="${!OPTIND}"
 	echo -e "NEXT_ARG: ${NEXT_ARG}"
         if [[ "$NEXT_ARG" == "-cluster" ]]; then
