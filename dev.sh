@@ -415,7 +415,7 @@ host_file_manage() {
 
 usage() {
   echo
-  echo "Usage: [-i <ip_address> [<email>] [-cluster <name>]] [-r] [-u] [-e <email>] [-cluster <name>]"
+  echo "Usage: [-i <ip_address> [<email>] [-cluster <name>]] [-r] [-u] [-e <email>] [-c <name>]"
   echo
   echo "Options:"
   echo "  -i <ip_address> [<email>] [-cluster <name>]  Install with the specified IP address. Optionally, assign the machine to the specified email address. The email must exist in the system."
@@ -518,7 +518,7 @@ parse_args() {
             echo "Error: Option -e requires an argument. (ex. -e user@example.com)" >&2
             ;;
           c)
-            echo "Error: Option -cluster requires an argument. (ex. -cluster myCluster)" >&2
+            echo "Error: Option -cluster requires an argument. (ex. -c myCluster)" >&2
             ;;
         esac
         usage
