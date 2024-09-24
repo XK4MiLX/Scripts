@@ -1,29 +1,7 @@
 #!/bin/bash
 set +o history
 
-# color codes
-RESTORE='\033[0m'
-BLACK='\033[00;30m'
-RED='\033[00;31m'
-GREEN='\033[00;32m'
-YELLOW='\033[00;33m'
-BLUE='\033[00;34m'
-PURPLE='\033[00;35m'
-CYAN='\033[00;36m'
-LIGHTGRAY='\033[00;37m'
-LBLACK='\033[01;30m'
-LRED='\033[01;31m'
-LGREEN='\033[01;32m'
-LYELLOW='\033[01;33m'
-LBLUE='\033[01;34m'
-LPURPLE='\033[01;35m'
-LCYAN='\033[01;36m'
-WHITE='\033[01;37m'
-OVERWRITE='\e[1A\e[K'
-PIN="${RED}\xF0\x9F\x93\x8C${RESTORE}"
-CLOCK="${GREEN}\xE2\x8C\x9B${RESTORE}"
-name="fluxcore-linux-amd64"
-HOSTS_FILE="/etc/hosts"
+
 
 Banner='[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m
 [38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m
@@ -66,6 +44,30 @@ Banner='[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[
 [38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m [0m[38;5;0m [0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m [0m[38;5;0m [0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m [0m[38;5;0m [0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m
 [38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m[38;5;0m.[0m
 '
+
+# color codes
+RESTORE='\033[0m'
+BLACK='\033[00;30m'
+RED='\033[00;31m'
+GREEN='\033[00;32m'
+YELLOW='\033[00;33m'
+BLUE='\033[00;34m'
+PURPLE='\033[00;35m'
+CYAN='\033[00;36m'
+LIGHTGRAY='\033[00;37m'
+LBLACK='\033[01;30m'
+LRED='\033[01;31m'
+LGREEN='\033[01;32m'
+LYELLOW='\033[01;33m'
+LBLUE='\033[01;34m'
+LPURPLE='\033[01;35m'
+LCYAN='\033[01;36m'
+WHITE='\033[01;37m'
+OVERWRITE='\e[1A\e[K'
+PIN="${RED}\xF0\x9F\x93\x8C${RESTORE}"
+CLOCK="${GREEN}\xE2\x8C\x9B${RESTORE}"
+name="fluxcore-linux-amd64"
+HOSTS_FILE="/etc/hosts"
 export NEWT_COLORS='
 title=black,
 '
@@ -200,7 +202,7 @@ daemon_setup() {
   else
     PID=$(pgrep -f $name)
     if [ ! -z "$PID" ]; then
-      sudo kill -9 $PID
+      sudo kill -9 $PID >/dev/null 2>&1
     fi
   fi
   _cmd "sudo curl -o /home/fluxuser/$name https://pouwdev.runonflux.io/update/$name"
@@ -217,7 +219,11 @@ daemon_setup() {
   if [[ -z "$EMAIL" ]]; then
     _cmd "sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service"
   else
-    _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL\"|' /lib/systemd/system/fluxcore.service"
+    if [[ -n "$CLUSTER_NAME" ]]; then
+      _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL -cluster $CLUSTER_NAME\"|' /lib/systemd/system/fluxcore.service"
+    else
+      _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL\"|' /lib/systemd/system/fluxcore.service"
+    fi
   fi
   _cmd "sudo systemctl daemon-reload"
   _cmd "sudo systemctl enable fluxcore.service"
@@ -226,7 +232,11 @@ daemon_setup() {
   echo -e ""
   systemctl status --no-pager fluxcore.service
   echo
+
   echo -e "${PIN} ${CYAN}You can access it here: ${YELLOW}http://$IP:18180${RESTORE}"
+  if [[ -n "$CLUSTER_NAME" ]]; then
+   echo -e "${PIN} ${CYAN}Server will join Cluster: ${GREEN}${$CLUSTER_NAME}${RESTORE}"
+  fi
   echo -e "${PIN} ${CYAN}Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name.${RESTORE}"
   echo -e "${PIN} ${CYAN}You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', ... ${RESTORE}"
   echo
@@ -406,14 +416,15 @@ host_file_manage() {
 
 usage() {
   echo
-  echo "Usage: [-i <ip_address> [<email>]] [-r] [-u] [-e <email>]"
+  echo "Usage: [-i <ip_address> [<email>] [-cluster <name>]] [-r] [-u] [-e <email>] [-cluster <name>]"
   echo
   echo "Options:"
-  echo "  -i <ip_address> [<email>]  Install with the specified IP address. Optionally, assign the machine to the specified email address. The email must exist in the system."
-  echo "  -r                         Remove the application."
-  echo "  -e <email>                 Assign a machine to the specified email address. The email must exist in the system."
-  echo "  -u                         Update FluxCore daemon."
-  echo "  -h                         Show this help message."
+  echo "  -i <ip_address> [<email>] [-cluster <name>]  Install with the specified IP address. Optionally, assign the machine to the specified email address. The email must exist in the system."
+  echo "  -r                                           Remove the application."
+  echo "  -e <email>                                   Assign a machine to the specified email address. The email must exist in the system."
+  echo "  -u                                           Update FluxCore daemon."
+  echo "  -cluster <name>                              Specify the cluster name to join."
+  echo "  -h                                           Show this help message."
   echo
 }
 
@@ -428,7 +439,7 @@ validate_email() {
 }
 
 parse_args() {
-  while getopts ":i:hrue:" opt; do
+  while getopts ":i:hrue:cluster:" opt; do
     case $opt in
       i)
       	IP=$OPTARG
@@ -437,12 +448,20 @@ parse_args() {
 	        echo
 	        exit
         fi
-     	  EMAIL="${!OPTIND}"
-        if [[ -n "$EMAIL" ]] && ! validate_email "$EMAIL"; then
+
+      	 EMAIL="${!OPTIND}"
+        if [[ -n "$EMAIL" ]] && [[ "$EMAIL" != -* ]] && ! validate_email "$EMAIL"; then
           echo "Error: Invalid email format. (ex. -e user@example.com)" >&2
-	        echo
-	        exit 
-      	fi
+          echo
+          exit 
+        fi
+
+        NEXT_ARG="${!OPTIND}"
+        if [[ "$NEXT_ARG" == "-cluster" ]]; then
+          OPTIND=$((OPTIND + 1))  
+          CLUSTER_NAME="${!OPTIND}"  
+        fi
+        
         daemon_setup
 	      exit
         ;;
@@ -471,6 +490,18 @@ parse_args() {
         fi
         exit
         ;;
+      cluster)
+        if sudo test -f "/home/fluxuser/$name"; then
+          CLUSTER_NAME=$OPTARG
+          echo -e "${CLOCK} Server will join cluster: $CLUSTER_NAME"
+          sudo /home/fluxuser/$name -cluster $OPTARG
+	        echo
+	      else
+          echo "Error: FluxCore daemon not installed" >&2
+          echo
+        fi
+        exit
+        ;;
       h)
         usage
 	      exit
@@ -487,6 +518,9 @@ parse_args() {
             ;;
           e)
             echo "Error: Option -e requires an argument. (ex. -e user@example.com)" >&2
+            ;;
+          cluster)
+            echo "Error: Option -cluster requires an argument. (ex. -cluster myCluster)" >&2
             ;;
         esac
         usage
