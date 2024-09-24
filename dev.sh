@@ -439,9 +439,10 @@ validate_email() {
 }
 
 parse_args() {
-  echo -e "$1"
+  STRING=$1
+  LENGTH=${#STRING}
   sleep 5
-  if [[ "$1" =~ ^-([a-zA-Z]{3,}) ]]; then
+  if [[ $LENGTH -gt 2 ]]; then
      echo "Invalid option: $1" >&2
      usage
     exit 1
