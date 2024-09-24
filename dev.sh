@@ -460,8 +460,6 @@ parse_args() {
           OPTIND=$((OPTIND + 1))  
           CLUSTER_NAME="${!OPTIND}"  
         fi
-
-	sleep 10
         daemon_setup
 	      exit
         ;;
