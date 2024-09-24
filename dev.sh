@@ -419,7 +419,8 @@ usage() {
   echo
   echo "Options:"
   echo "  -i <ip_address> [<email>] [-cluster <name>]  Install with the specified IP address."
-  echo "                                               You can optionally assign the machine to a specified email address or a cluster. The email must exist in the system."
+  echo "                                               You can optionally assign the machine to a specified email address or a cluster."
+  echo "                                               The email must exist in the system."
   echo "  -r                                           Remove the application."
   echo "  -e <email>                                   Assign a machine to the specified email address. The email must exist in the system."
   echo "  -u                                           Update FluxCore daemon."
