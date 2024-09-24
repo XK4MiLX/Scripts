@@ -518,7 +518,7 @@ parse_args() {
             echo "Error: Option -e requires an argument. (ex. -e user@example.com)" >&2
             ;;
           c)
-            echo "Error: Option -cluster requires an argument. (ex. -c myCluster)" >&2
+            echo "Error: Option -c requires an argument. (ex. -c myCluster)" >&2
             ;;
         esac
         usage
