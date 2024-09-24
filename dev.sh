@@ -65,7 +65,7 @@ PIN="${RED}\xF0\x9F\x93\x8C${RESTORE}"
 CLOCK="${GREEN}\xE2\x8C\x9B${RESTORE}"
 name="fluxcore-linux-amd64"
 HOSTS_FILE="/etc/hosts"
-BASE_DOMAIN="https://pouwdev.runonflux.io"
+BASE_DOMAIN="https://pouwdev.runonflux.io/update"
 BRANCH="Dev"
 export NEWT_COLORS='
 title=black,
@@ -204,7 +204,7 @@ daemon_setup() {
       sudo kill -9 $PID >/dev/null 2>&1
     fi
   fi
-  _cmd "sudo curl -o /home/fluxuser/$name ${BASE_DOMAIN}/update/$name"
+  _cmd "sudo curl -o /home/fluxuser/$name ${BASE_DOMAIN}/$name"
   _task "Set permissions for Fluxcore executable"
   _cmd "sudo chown fluxuser:fluxuser /home/fluxuser/$name && sudo chmod +x /home/fluxuser/$name"
   _cmd "sudo setcap 'CAP_DAC_READ_SEARCH+eip cap_net_bind_service=+ep' /home/fluxuser/$name"
@@ -214,7 +214,7 @@ daemon_setup() {
     get_local_ip
   fi
   IP=${IP:-127.0.0.1}
-  _cmd "sudo curl -o /lib/systemd/system/fluxcore.service ${BASE_DOMAIN}/update/fluxcore.service"
+  _cmd "sudo curl -o /lib/systemd/system/fluxcore.service ${BASE_DOMAIN}/fluxcore.service"
   if [[ -z "$EMAIL" ]]; then
     _cmd "sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service"
   else
@@ -303,7 +303,7 @@ uninstall() {
 }
 
 fix_frankenstein() {
-  curl -o fix-frankenstein.sh ${BASE_DOMAIN}/update/fix-frankenstein.sh
+  curl -o fix-frankenstein.sh ${BASE_DOMAIN}/fix-frankenstein.sh
   bash fix-frankenstein.sh
 }
 
