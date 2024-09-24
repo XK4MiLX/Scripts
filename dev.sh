@@ -219,10 +219,10 @@ daemon_setup() {
   if [[ -z "$EMAIL" ]]; then
     _cmd "sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service"
   else
-    if [[ -n "$CLUSTER_NAME" ]]; then
-      _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL -cluster $CLUSTER_NAME\"|' /lib/systemd/system/fluxcore.service"
+    if [[ -z "$CLUSTER_NAME" ]]; then
+       _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL\"|' /lib/systemd/system/fluxcore.service"
     else
-      _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL\"|' /lib/systemd/system/fluxcore.service"
+      _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL -cluster $CLUSTER_NAME\"|' /lib/systemd/system/fluxcore.service"
     fi
   fi
   _cmd "sudo systemctl daemon-reload"
@@ -234,7 +234,7 @@ daemon_setup() {
   echo
 
   echo -e "${PIN} ${CYAN}You can access it here: ${YELLOW}http://$IP:18180${RESTORE}"
-  if [[ -n "$CLUSTER_NAME" ]]; then
+  if [[ "$CLUSTER_NAME" != "" ]]; then
    echo -e "${PIN} ${CYAN}Server will join Cluster: ${GREEN}${$CLUSTER_NAME}${RESTORE}"
   fi
   echo -e "${PIN} ${CYAN}Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name.${RESTORE}"
