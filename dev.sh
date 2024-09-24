@@ -234,8 +234,8 @@ daemon_setup() {
   echo
 
   echo -e "${PIN} ${CYAN}You can access it here: ${YELLOW}http://$IP:18180${RESTORE}"
-  if [[ "$CLUSTER_NAME" != "" ]]; then
-   echo -e "${PIN} ${CYAN}Server will join Cluster: ${GREEN}${CLUSTER_NAME}${RESTORE}"
+  if [[ -n "$CLUSTER_NAME" ]]; then
+   echo -e "${PIN} ${CYAN}Server assigned to cluster: ${GREEN}${CLUSTER_NAME}${RESTORE}"
   fi
   echo -e "${PIN} ${CYAN}Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name.${RESTORE}"
   echo -e "${PIN} ${CYAN}You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', ... ${RESTORE}"
@@ -423,7 +423,7 @@ usage() {
   echo "  -r                                           Remove the application."
   echo "  -e <email>                                   Assign a machine to the specified email address. The email must exist in the system."
   echo "  -u                                           Update FluxCore daemon."
-  echo "  -cluster <name>                              Specify the cluster name to join."
+  echo "  -cluster <name>                              Assign a machine to the specified cluster."
   echo "  -h                                           Show this help message."
   echo
 }
