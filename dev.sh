@@ -237,9 +237,6 @@ daemon_setup() {
   if [[ -n "$CLUSTER_NAME" ]]; then
    echo -e "${PIN} ${CYAN}Server assigned to cluster: ${GREEN}${CLUSTER_NAME}${RESTORE}"
   fi
-  if [[ -n "$PREMIUM_ID" ]]; then
-   echo -e "${PIN} ${CYAN}Machine marked as premium, ID: ${GREEN}${PREMIUM_ID}${RESTORE}"
-  fi
   echo -e "${PIN} ${CYAN}Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name.${RESTORE}"
   echo -e "${PIN} ${CYAN}You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', ... ${RESTORE}"
   echo
@@ -451,7 +448,7 @@ parse_args() {
     exit 1
   fi
   
-  while getopts ":i:hrue:c:" opt; do
+  while getopts ":i:hrue: opt; do
     case $opt in
       i)
       	IP=$OPTARG
@@ -471,13 +468,23 @@ parse_args() {
         NEXT_ARG="${!OPTIND}"
         if [[ "$NEXT_ARG" == "-cluster" ]]; then
           OPTIND=$((OPTIND + 1))  
-          CLUSTER_NAME="${!OPTIND}"  
+          CLUSTER_NAME="${!OPTIND}"
+          if [[ -z "$CLUSTER_NAME" ]] || [[ "$CLUSTER_NAME" == -* ]]; then
+            echo "Error: Cluster name cannot be empty or a flag after -cluster." >&2
+            echo
+            exit 1
+          fi
         fi
         OPTIND=$((OPTIND + 1)) 
         NEXT_ARG="${!OPTIND}"
         if [[ "$NEXT_ARG" == "-premium" ]]; then
           OPTIND=$((OPTIND + 1))  
           PREMIUM_ID="${!OPTIND}"  
+          if [[ -z "$PREMIUM_ID" ]] || [[ "$PREMIUM_ID" == -* ]]; then
+            echo "Error: Premium ID cannot be empty or a flag after -premium." >&2
+            echo
+            exit 1
+          fi
         fi
         daemon_setup
 	      exit
