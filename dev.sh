@@ -448,7 +448,7 @@ parse_args() {
     exit 1
   fi
   
-  while getopts ":i:hrue: opt; do
+  while getopts ":i:hrue:" opt; do
     case $opt in
       i)
       	IP=$OPTARG
