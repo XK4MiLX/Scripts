@@ -213,17 +213,18 @@ daemon_setup() {
   if [[ -z "$IP" ]]; then
     get_local_ip
   fi
-  IP=${IP:-127.0.0.1}
   _cmd "sudo curl -o /lib/systemd/system/fluxcore.service ${BASE_DOMAIN}/fluxcore.service"
-  if [[ -z "$EMAIL" ]]; then
-    _cmd "sudo sed -i "s/127.0.0.1/$IP/g" /lib/systemd/system/fluxcore.service"
-  else
-    if [[ -z "$CLUSTER_NAME" ]]; then
-       _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL\"|' /lib/systemd/system/fluxcore.service"
-    else
-      _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip $IP -email $EMAIL -cluster $CLUSTER_NAME\"|' /lib/systemd/system/fluxcore.service"
-    fi
+  extra_options="-ip ${IP:-127.0.0.1}"
+  if [[ -n "$EMAIL" ]]; then
+    extra_options+=" -email $EMAIL"
   fi
+  if [[ -n "$CLUSTER_NAME" ]]; then
+    extra_options+=" -cluster $CLUSTER_NAME"
+  fi
+  if [[ -n "$PREMIUM_ID" ]]; then
+    extra_options+=" -premium $PREMIUM_ID"
+  fi
+  _cmd "sudo sed -i 's|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon -ip [0-9.]*\"|ExecStart=/bin/bash -c \"/home/fluxuser/$name -daemon $extra_options\"|' /lib/systemd/system/fluxcore.service"
   _cmd "sudo systemctl daemon-reload"
   _cmd "sudo systemctl enable fluxcore.service"
   _cmd "sudo systemctl start fluxcore.service"
@@ -235,6 +236,9 @@ daemon_setup() {
   echo -e "${PIN} ${CYAN}You can access it here: ${YELLOW}http://$IP:18180${RESTORE}"
   if [[ -n "$CLUSTER_NAME" ]]; then
    echo -e "${PIN} ${CYAN}Server assigned to cluster: ${GREEN}${CLUSTER_NAME}${RESTORE}"
+  fi
+  if [[ -n "$PREMIUM_ID" ]]; then
+   echo -e "${PIN} ${CYAN}Machine marked as premium, ID: ${GREEN}${PREMIUM_ID}${RESTORE}"
   fi
   echo -e "${PIN} ${CYAN}Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name.${RESTORE}"
   echo -e "${PIN} ${CYAN}You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', ... ${RESTORE}"
@@ -468,6 +472,12 @@ parse_args() {
         if [[ "$NEXT_ARG" == "-cluster" ]]; then
           OPTIND=$((OPTIND + 1))  
           CLUSTER_NAME="${!OPTIND}"  
+        fi
+        OPTIND=$((OPTIND + 1)) 
+        NEXT_ARG="${!OPTIND}"
+        if [[ "$NEXT_ARG" == "-premium" ]]; then
+          OPTIND=$((OPTIND + 1))  
+          PREMIUM_ID="${!OPTIND}"  
         fi
         daemon_setup
 	      exit
