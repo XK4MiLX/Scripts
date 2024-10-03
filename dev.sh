@@ -237,6 +237,9 @@ daemon_setup() {
   if [[ -n "$CLUSTER_NAME" ]]; then
    echo -e "${PIN} ${CYAN}Server assigned to cluster: ${GREEN}${CLUSTER_NAME}${RESTORE}"
   fi
+  if [[ -n "$PREMIUM_ID" ]]; then
+   echo -e "${PIN} ${CYAN}Machine marked as premium, ID: ${LGREEN}${PREMIUM_ID}${RESTORE}"
+  fi
   echo -e "${PIN} ${CYAN}Be aware to sign in, third parties like Github, Google, etc. require you to have a domain name.${RESTORE}"
   echo -e "${PIN} ${CYAN}You can add the IP of your remote to the host file under the name 'machine1.remote.fluxcore', 'machine2.remote.fluxcore', ... ${RESTORE}"
   echo
