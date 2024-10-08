@@ -89,11 +89,32 @@ function _task {
 }
 
 # _cmd performs commands with error checking
-function _cmd {
-    > debug.log
-    if eval "$1" 1> /dev/null 2> debug.log; then
-        return 0 # success
+_cmd() {
+    > debug.log # Clear or create debug log
+
+    # Check if the command contains "curl"
+    if [[ "$1" == *"curl"* ]]; then
+        # Try curl first
+        if eval "$1" 1> /dev/null 2> debug.log; then
+            return 0 # curl success
+        else
+            printf "${OVERWRITE}${LRED} [X] curl failed for ${TASK}, trying wget...${LRED}\n"
+
+            # Replace "curl -o" with "wget -O" in the command
+            fallback_command=$(echo "$1" | sed -E 's/curl -o (.*) (.*)/wget -O \1 \2/') # Replace curl with wget
+
+            if eval "$fallback_command" 1> /dev/null 2>> debug.log; then
+                return 0 # wget success
+            fi
+        fi
+    else
+        # For all other commands, just execute them
+        if eval "$1" 1> /dev/null 2> debug.log; then
+            return 0 # success for other commands
+        fi
     fi
+
+    # If both curl and wget fail, or if a non-curl command fails, display error log
     printf "${OVERWRITE}${LRED} [X]  ${TASK}${LRED}\n"
     while read line; do 
         printf "      ${line}\n"
@@ -102,7 +123,7 @@ function _cmd {
     rm debug.log
     set -o history
     exit 1
-} 
+}
 
 sudo_check() {
  echo "Checking if sudo requires a password..."
