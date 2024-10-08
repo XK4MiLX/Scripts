@@ -98,7 +98,7 @@ _cmd() {
         if eval "$1" 1> /dev/null 2> debug.log; then
             return 0 # curl success
         else
-            printf "${OVERWRITE}${LRED} [X] curl failed for ${TASK}, trying wget...${LRED}\n"
+            printf "${OVERWRITE}${LRED} [X] Curl failed for ${TASK}, trying wget...${LRED}\n"
 
             # Replace "curl -o" with "wget -O" in the command
             fallback_command=$(echo "$1" | sed -E 's/curl -o (.*) (.*)/wget -O \1 \2/') # Replace curl with wget
